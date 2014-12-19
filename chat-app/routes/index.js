@@ -25,15 +25,10 @@ io.on('connection', function(socket){
 		console.log('usermessage: ' + msg);
 		io.emit('user message', msg);
 	});
-	var n = 20;
-	while (n > 0) {
-		socket.emit('emic message', 'This is emic');
-		console.log('emic message: ' + 'This is emic');
-		n -= 1;
-	}
-	//socket.on('disconnect', function(){
-	//	console.log('user disconnected');
-	//});
+
+	socket.on('disconnect', function(){
+		console.log('user disconnected');
+	});
 });
 
 http.listen(3001, function(){
