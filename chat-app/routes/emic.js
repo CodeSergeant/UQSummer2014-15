@@ -6,7 +6,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
 var EMIC = (function() {
-
+var isOpen = false;
 
 var emic = {};
 emic.init = function () {
@@ -17,6 +17,7 @@ emic.init = function () {
 
 	serialPort.on('open', function () {
 		console.log('Port is open')
+		isOpen = true;
 		serialPort.on('data', function(msg) {
 			console.log(msg.toString('ascii'));
 		});
@@ -25,6 +26,7 @@ emic.init = function () {
 };
 emic.speak = function (data) {
 	data = data.toString('ascii');
+	while (isOpen == false) {};
 	if (data.length > 1000) {
 		console.log('Error: Message exceeds the character limit');
 	} else {
