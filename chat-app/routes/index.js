@@ -3,6 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var EMIC = require('./emic.js');
 //var fs = require('fs');
+EMIC.init();
 
 app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");

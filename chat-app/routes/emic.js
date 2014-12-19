@@ -4,22 +4,27 @@
 
 
 var EMIC = (function() {
-var SerialPort = require('serialport').SerialPort;
-console.log('Successfully loaded SerialPort module');
 
-var serialPort = new SerialPort('/dev/ttyAMA0', {
-	baudRate: 9600
-});
-console.log('Successfully initialised /dev/ttyAMA0');
 
-serialPort.on('open', function () {
-	console.log('Port is open')
-	serialPort.on('data', function(msg) {
-		console.log(msg.toString('ascii'));
-	});
-	serialPort.write(':SHello World to all\r');
-});
 var emic = {};
+emic.init = function () {
+	var SerialPort = require('serialport').SerialPort;
+	console.log('Successfully loaded SerialPort module');
+
+	var serialPort = new SerialPort('/dev/ttyAMA0', {
+		baudRate: 9600
+	});
+	console.log('Successfully initialised /dev/ttyAMA0');
+
+	serialPort.on('open', function () {
+		console.log('Port is open')
+		serialPort.on('data', function(msg) {
+			console.log(msg.toString('ascii'));
+		});
+		serialPort.write(':SHello World to all\r');
+	});
+	return serialPort
+};
 emic.speak = function (data) {
 	data = data.toString('ascii');
 	if (data.length > 1000) {
