@@ -1,0 +1,99 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'express@4.10.2' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 warn package.json socket-chat-example@0.0.1 No repository field.
+5 warn package.json socket-chat-example@0.0.1 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'express@4.10.2', null ]
+8 verbose cache add name=undefined spec="express@4.10.2" args=["express@4.10.2",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'express@4.10.2',
+9 verbose parsed url   path: 'express@4.10.2',
+9 verbose parsed url   href: 'express@4.10.2' }
+10 verbose cache add name="express" spec="4.10.2" args=["express","4.10.2"]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: '4.10.2',
+11 verbose parsed url   path: '4.10.2',
+11 verbose parsed url   href: '4.10.2' }
+12 verbose addNamed [ 'express', '4.10.2' ]
+13 verbose addNamed [ '4.10.2', '4.10.2' ]
+14 silly lockFile 787e98b4-express-4-10-2 express@4.10.2
+15 verbose lock express@4.10.2 /Users/lucas/.npm/787e98b4-express-4-10-2.lock
+16 verbose request where is /express
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 1871aa6556a1a63b
+19 verbose url raw /express
+20 verbose url resolving [ 'https://registry.npmjs.org/', './express' ]
+21 verbose url resolved https://registry.npmjs.org/express
+22 verbose request where is https://registry.npmjs.org/express
+23 info trying registry request attempt 1 at 09:20:15
+24 verbose etag "9DTOMFNLEFL45KO690AS492CM"
+25 http GET https://registry.npmjs.org/express
+26 http 200 https://registry.npmjs.org/express
+27 silly registry.get cb [ 200,
+27 silly registry.get   { date: 'Wed, 10 Dec 2014 23:20:15 GMT',
+27 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+27 silly registry.get     etag: '"E9IMBQLUWBTL7MLNKQKT2QSPJ"',
+27 silly registry.get     'content-type': 'application/json',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     'content-length': '431740',
+27 silly registry.get     'accept-ranges': 'bytes',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     age: '52',
+27 silly registry.get     'x-served-by': 'cache-syd1623-SYD',
+27 silly registry.get     'x-cache': 'HIT',
+27 silly registry.get     'x-cache-hits': '1',
+27 silly registry.get     'x-timer': 'S1418253615.508827,VS0,VE1',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 silly lockFile d0bb09e8-s-org-express-express-4-10-2-tgz https://registry.npmjs.org/express/-/express-4.10.2.tgz
+29 verbose lock https://registry.npmjs.org/express/-/express-4.10.2.tgz /Users/lucas/.npm/d0bb09e8-s-org-express-express-4-10-2-tgz.lock
+30 verbose addRemoteTarball [ 'https://registry.npmjs.org/express/-/express-4.10.2.tgz',
+30 verbose addRemoteTarball   'df06dde94d968932829d440a2004c5efe64495b0' ]
+31 info retry fetch attempt 1 at 09:20:15
+32 verbose fetch to= /var/folders/nb/nbseoh7vHp8cpadE3ju60++++Ts/-Tmp-/npm-13644-JMPP6Upg/registry.npmjs.org/express/-/express-4.10.2.tgz
+33 http GET https://registry.npmjs.org/express/-/express-4.10.2.tgz
+34 http 200 https://registry.npmjs.org/express/-/express-4.10.2.tgz
+35 silly lockFile d0bb09e8-s-org-express-express-4-10-2-tgz https://registry.npmjs.org/express/-/express-4.10.2.tgz
+36 silly lockFile d0bb09e8-s-org-express-express-4-10-2-tgz https://registry.npmjs.org/express/-/express-4.10.2.tgz
+37 silly lockFile 787e98b4-express-4-10-2 express@4.10.2
+38 silly lockFile 787e98b4-express-4-10-2 express@4.10.2
+39 error Error: EACCES, mkdir '/Users/lucas/.npm/express/4.10.2'
+39 error  { [Error: EACCES, mkdir '/Users/lucas/.npm/express/4.10.2']
+39 error   errno: 3,
+39 error   code: 'EACCES',
+39 error   path: '/Users/lucas/.npm/express/4.10.2',
+39 error   parent: 'socket-chat-example' }
+40 error Please try running this command again as root/Administrator.
+41 error System Darwin 10.8.0
+42 error command "node" "/usr/local/bin/npm" "install" "--save" "express@4.10.2"
+43 error cwd /Users/lucas/chat-app
+44 error node -v v0.10.33
+45 error npm -v 1.4.28
+46 error path /Users/lucas/.npm/express/4.10.2
+47 error code EACCES
+48 error errno 3
+49 error stack Error: EACCES, mkdir '/Users/lucas/.npm/express/4.10.2'
+50 verbose exit [ 3, true ]

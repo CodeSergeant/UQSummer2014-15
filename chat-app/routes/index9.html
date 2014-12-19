@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+	<head>
+		<title>EMIC2 Text2Audio Conversion Client</title>
+		<!--<h1>User Commands</h1>-->
+		<style>
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			<!--header { position: fixed; background-color: black; color: white; text-align: center; padding: 5px; top: 0; left: 0; right: 0; height: 20px;}-->
+			body { font: 13px Helvetica, Arial;}
+			form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+			form input { border: 0; padding: 10px; width: 90%; margin-right: .5%;}
+			form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+			html,body{margin:0;padding:0}
+			body{font: 76% arial,sans-serif}
+			p{margin:0 10px 10px}
+			a{display:block;color: #981793;padding:10px}
+			div#header h1{height:80px;line-height:80px;margin:0; padding-left:10px;background-color: black;color: #F1F2F1}
+			div#content p{line-height:1.4}
+			div#navigation{height: 50%; background:#009246; border: 10px; border-color: black; padding: 10px;}
+			div#extra{background:#CE2B37}
+			div#footer{background: #333;color: #FFF}
+			div#footer p{margin:0;padding:5px 10px}
+
+			div#wrapper{float:right;width:100%;margin-right:0%}
+			div#content{float: right; padding: 10px; text-align: left; width: 25%}
+			div#navigation{float:left;width:75%}
+			div#extra{max-height: 50%; float: bottom, left; ;clear:left;width:75%; padding: 10px;}
+			div#footer{clear:both;width:100%}
+			#usermsgcontainer { <!--min-height: 60%;--> position: fixed; border: 3; background: #000}
+			#emicmsgcontainer { max-height: 30%; border: 3; border-color: #eee; background: #011;}
+			#usermessages { list-style-type: none; margin: 0; padding: 0; }
+			#usermessages li { padding: 5px 10px; }
+			#usermessages li:nth-child(odd) { background: #eee; }
+			#emicmessages { list-style-type: none; margin: 0; padding: 0; }
+			#emicmessages li { padding: 5px 10px; }
+			#emicmessages li:nth-child(odd) { background: #eee; }
+		</style>
+	</head>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			var socket = io();
+			$("form").submit(function(e) {
+				e.preventDefault();
+				socket.emit('user message', $('#m').val());
+				$("#m").val("");
+				return false;
+			});
+			socket.on('user message', function(msg){
+				$('#usermessages').prepend($('<li>').text(msg));
+			});
+			socket.on('emic message', function(msg){
+				$('#emicmessages').prepend($('<li>').text(msg));
+			});
+		});
+	</script>
+	<body>
+		<div id='container'>
+			<div id='header'><h1>The EMIC2 Text2Audio Converter</h1></div>
+			<div id='wrapper'>
+				<div id='content'>
+					This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. This is where the allowable commands are put, as a reference to the user. 
+
+				</div>
+				<div id='navigation'>
+					<strong>User Instructions</strong>
+					<ul id='usermessages'></ul>
+				</div>
+				<div id='extra'>
+					<strong>EMIC Status Reports</strong>
+					<ul id='emicmessages'></ul>
+				</div>
+			</div>
+
+		</div>
+		<form>
+			<input id="m" autocomplete="on" />
+			<button>Send</button>
+		</form>
+	</body>
+</html>
