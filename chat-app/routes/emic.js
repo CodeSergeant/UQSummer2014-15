@@ -1,19 +1,18 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
 
-
-
+var SerialPort = require('serialport').SerialPort;
+var serialPort = new SerialPort('/dev/ttyAMA0', {
+	baudRate: 9600
+});
 var EMIC = (function() {
 
 
 var emic = {};
 emic.init = function () {
-	var SerialPort = require('serialport').SerialPort;
+	
 	console.log('Successfully loaded SerialPort module');
 
-	var serialPort = new SerialPort('/dev/ttyAMA0', {
-		baudRate: 9600
-	});
 	console.log('Successfully initialised /dev/ttyAMA0');
 
 	serialPort.on('open', function () {
@@ -23,7 +22,6 @@ emic.init = function () {
 		});
 		serialPort.write(':SHello World to all\r');
 	});
-	return serialPort
 };
 emic.speak = function (data) {
 	data = data.toString('ascii');
