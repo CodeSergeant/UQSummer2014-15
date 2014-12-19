@@ -24,7 +24,7 @@ emic.speak = function (data) {
 	if (data.length > 1000) {
 		console.log('Error: Message exceeds the character limit');
 	} else {
-		serialPort.write(':SHello World to all\r');
+		//serialPort.write(':SHello World to all\r');
 		serialPort.write(':S' + data + '\r');
 		console.log(':S' + data + '\r');
 	};
