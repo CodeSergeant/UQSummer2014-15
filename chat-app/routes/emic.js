@@ -1,6 +1,6 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
-
+var emic
 var SerialPort = require('serialport').SerialPort;
 console.log('Successfully loaded SerialPort module');
 
@@ -16,8 +16,8 @@ serialPort.on('open', function () {
 	});
 	serialPort.write(':SHello World to all\r');
 });
-		
-function emic.speak(data) {
+
+emic.speak = function (data) {
 	data = data.toString('ascii');
 	if (data.length > 1000) {
 		console.log('Error: Message exceeds the character limit');
@@ -26,7 +26,7 @@ function emic.speak(data) {
 	};
 };
 
-function emic.demo(id) {
+emic.demo = function (id) {
 	id = id.toString('ascii');
 	if (id == '0' || id == '1' || id == '2') {
 		serialPort.write(':D' + id + '\r');
@@ -35,15 +35,15 @@ function emic.demo(id) {
 	};
 };
 
-function emic.stopNow() {
+emic.stopNow = function () {
 	serialPort.write(':X\r');
 }
 
-function emic.pause() {
+emic.pause = function () {
 	serialPort.write(':Z\r');
 };
 
-function emic.voice(id) {
+emic.voice = function (id) {
 	var idN = id.parseInt();
 	if (idN >= 0 && idN <= 8) {
 		id.toString('ascii');
@@ -53,7 +53,7 @@ function emic.voice(id) {
 	};
 };
 
-function emic.volume(level) {
+emic.volume = function (level) {
 	var levelN = id.parseInt();
 	if (levelN >= -48 && levelN <= 18) {
 		level = level.toString('ascii');
@@ -63,7 +63,7 @@ function emic.volume(level) {
 	};
 };
 
-function emic.rate(wpm) {
+emic.rate = function (wpm) {
 	var wpmN = wpm.parseInt();
 	if (wpmN >= 75 && wpmN <= 600) {
 		wpm = wpm.toString('ascii');
@@ -73,7 +73,7 @@ function emic.rate(wpm) {
 	};
 };
 
-function emic.parser(id) {
+emic.parser = function (id) {
 	id = id.toString('ascii');
 	if (parser == '0' || parser == '1' || parser == '2') {
 		serialPort.write(':P' + id + '\r');
@@ -82,19 +82,19 @@ function emic.parser(id) {
 	};
 };
 
-function emic.revert() {
+emic.revert = function () {
 	serialPort.write(':R\r');
 };
 
-function emic.callCurrentSettings() {
+emic.callCurrentSettings = function () {
 	serialPort.write(':C\r');
 };
 
-function emic.callVersionInfo() {
+emic.callVersionInfo = function () {
 	serialPort.write(':I\r');
 };
 
-function emic.callCommands() {
+emic.callCommands = function () {
 	serialPort.write(':I\r');
 }; 
 
@@ -103,5 +103,5 @@ function emic.callCommands() {
 	logf.writeln(output);
 	logf.close()*/
 
-modules.exports = emic
+module.exports = emic;
 
