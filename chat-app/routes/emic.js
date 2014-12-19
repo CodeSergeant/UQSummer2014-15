@@ -33,7 +33,7 @@ emic.init = function () {
 };
 emic.speak = function (data) {
 	data = data.toString('ascii');
-	while (isOpen == false || isReady == false) {};
+	while (isOpen == false) {};
 	if (data.length > 1000) {
 		console.log('Error: Message exceeds the character limit');
 	} else {
