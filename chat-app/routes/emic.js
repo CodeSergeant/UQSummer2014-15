@@ -7,6 +7,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 });
 var EMIC = (function() {
 var isOpen = false;
+var isReady = false;
 
 var emic = {};
 emic.init = function () {
@@ -19,20 +20,27 @@ emic.init = function () {
 		console.log('Port is open')
 		isOpen = true;
 		serialPort.on('data', function(msg) {
-			console.log(msg.toString('ascii'));
+			msg = msg.toString('ascii');
+			console.log(msg);
+			if (msg == ':') {
+				isReady = true
+				console.log('Emic is ready for an instruction')
+			}
 		});
 		serialPort.write(':SHello World to all\r');
 	});
 };
 emic.speak = function (data) {
 	data = data.toString('ascii');
-	while (isOpen == false) {};
+	while (isOpen == false || isReady == false) {};
 	if (data.length > 1000) {
 		console.log('Error: Message exceeds the character limit');
 	} else {
 		//serialPort.write(':SHello World to all\r');
 		serialPort.write(':S' + data + '\r');
 		console.log(':S' + data + '\r');
+		isReady = false
+		console.log('Emic is busy')
 	};
 };
 
