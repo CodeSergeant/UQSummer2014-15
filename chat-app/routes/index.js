@@ -21,7 +21,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('user message', function(msg){
 		//console.log('hi all');
-		emic.speak(msg);
+		EMIC.speak(msg);
 		console.log('usermessage: ' + msg);
 		io.emit('user message', msg);
 	});
