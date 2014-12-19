@@ -22,6 +22,7 @@ emic.init = function () {
 		serialPort.on('data', function(msg) {
 			msg = msg.toString('ascii');
 			console.log(msg);
+			serialPort.flush();
 			if (msg == ':') {
 				isReady = true
 				console.log('Emic is ready for an instruction')
