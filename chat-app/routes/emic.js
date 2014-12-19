@@ -7,7 +7,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 });
 var EMIC = (function() {
 var isOpen = false;
-var isReady = false;
+var isReady = true;
 
 var emic = {};
 emic.init = function () {
