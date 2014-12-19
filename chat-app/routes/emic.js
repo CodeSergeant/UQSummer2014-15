@@ -16,8 +16,9 @@ serialPort.on('open', function () {
 	serialPort.write(':SHello World to all\r');
 });
 
-var emic = (function() {
+var EMIC = (function() {
 
+var emic = {};
 emic.speak = function (data) {
 	data = data.toString('ascii');
 	if (data.length > 1000) {
@@ -98,12 +99,12 @@ emic.callVersionInfo = function () {
 emic.callCommands = function () {
 	serialPort.write(':I\r');
 };
-});
+}());
 
 /*function writeLog(logFile, output){
 	var logf = new File(logFile);
 	logf.writeln(output);
 	logf.close()*/
 
-module.exports = emic;
+module.exports = EMIC;
 
