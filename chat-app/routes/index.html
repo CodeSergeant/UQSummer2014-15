@@ -49,10 +49,10 @@
 				return false;
 			});
 			socket.on('user message', function(msg){
-				$('#usermessages').append($('<li>').text(msg));
+				$('#usermessages').prepend($('<li>').text(msg));
 			});
 			socket.on('emic message', function(msg){
-				$('#emicmessages').append($('<li>').text(msg));
+				$('#emicmessages').prepend($('<li>').text(msg));
 			});
 		});
 	</script>
