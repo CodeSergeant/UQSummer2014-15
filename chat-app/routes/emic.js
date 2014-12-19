@@ -14,7 +14,7 @@ serialPort.on('open', function () {
 		console.log(msg.toString('ascii'));
 	});
 	serialPort.write(':SHello World to all\r');
-});
+
 
 var EMIC = (function() {
 
@@ -104,7 +104,7 @@ emic.callCommands = function () {
 return emic
 }());
 
-
+});
 /*function writeLog(logFile, output){
 	var logf = new File(logFile);
 	logf.writeln(output);
