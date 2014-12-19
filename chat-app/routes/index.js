@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var emic = require('./emic.js');
+var EMIC = require('./emic.js');
 //var fs = require('fs');
 
 app.get('/', function(req, res){
