@@ -1,5 +1,9 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
+
+
+
+var EMIC = (function() {
 var SerialPort = require('serialport').SerialPort;
 console.log('Successfully loaded SerialPort module');
 
@@ -14,10 +18,7 @@ serialPort.on('open', function () {
 		console.log(msg.toString('ascii'));
 	});
 	serialPort.write(':SHello World to all\r');
-
-
-var EMIC = (function() {
-
+});
 var emic = {};
 emic.speak = function (data) {
 	data = data.toString('ascii');
@@ -104,7 +105,7 @@ emic.callCommands = function () {
 return emic
 }());
 
-});
+
 /*function writeLog(logFile, output){
 	var logf = new File(logFile);
 	logf.writeln(output);
