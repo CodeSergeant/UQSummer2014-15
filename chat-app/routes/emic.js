@@ -99,6 +99,7 @@ emic.callVersionInfo = function () {
 emic.callCommands = function () {
 	serialPort.write(':I\r');
 };
+return emic
 }());
 
 /*function writeLog(logFile, output){
