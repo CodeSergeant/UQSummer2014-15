@@ -45,6 +45,7 @@ emic.speak = function (data) {
 		console.log(':S' + data + '\r');
 		isReady = false
 		console.log('Emic is busy')
+		io.emit('emic message', 'Emic is busy')
 	};
 };
 
