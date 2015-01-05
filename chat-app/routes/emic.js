@@ -1,5 +1,9 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var EMIC = require('./emic.js');
 
 var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
