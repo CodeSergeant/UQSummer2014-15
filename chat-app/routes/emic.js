@@ -22,7 +22,7 @@ emic.init = function () {
 		isOpen = true;
 		serialPort.on('data', function(msg) {
 			msg = msg.toString('ascii');
-			console.log(msg);
+			//console.log(msg);
 			serialPort.flush();
 			if (msg == ':') {
 				isReady = true
