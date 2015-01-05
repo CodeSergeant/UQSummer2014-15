@@ -9,17 +9,14 @@ var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
+console.log('Successfully loaded SerialPort module');
+console.log('Successfully initialised /dev/ttyAMA0');
 var EMIC = (function() {
 var isOpen = false;
 var isReady = true;
 var emic = {};
 
 emic.init = function () {
-	
-	console.log('Successfully loaded SerialPort module');
-
-	console.log('Successfully initialised /dev/ttyAMA0');
-
 	serialPort.on('open', function () {
 		console.log('Port is open')
 		isOpen = true;
@@ -30,7 +27,7 @@ emic.init = function () {
 			if (msg == ':') {
 				isReady = true
 				console.log('Emic is ready for an instruction')
-			} else { console.log('errorcheck')}
+			} else { console.log('errorcheck '+msg)}
 		});
 		//serialPort.write(':P0\r');
 		//serialPort.drain();
