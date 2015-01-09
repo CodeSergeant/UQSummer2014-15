@@ -15,6 +15,12 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var emic = require('./emic2.js');
+
+app.get('/', function(req, res){
+    //var html = fs.readFileSync("index3.html", "utf8");
+    //res.send(html);
+    res.sendFile(__dirname + '/main.html');
+});
 ASQ()
 /*.then(function () {app = require('express')();
 report(app)})
