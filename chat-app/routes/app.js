@@ -26,9 +26,10 @@ io.on('connection', function(socket){
 	});
 	socket.on('user message', function(msg){
 		report('sendmessage');
-		emic.speak(msg);
+		
 		report('usermessage: ' + msg);
 		io.emit('user message', msg);
+		emic.speak(msg);
 	});
 });
 http.listen(3001, function(){
