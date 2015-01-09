@@ -6,8 +6,8 @@ function report (msg) {
 	console.log(msg)
 };
 
-function repErr (err) {
-	console.err(err)
+function repErr (error) {
+	console.err(error)
 }
 
 var app, http, io, emic;
@@ -17,7 +17,7 @@ ASQ()
 .then(function () {io = require('socket.io')(http)})
 .then(function () {emic = require('./emic2.js')})
 .then(function () {report("Modules loaded successfully")})
-.or(repErr(msg));
+.or(repErr("Module load error"));
 /*
 var pApp = Promise.resolve(require('express')())
 	.then(global var )
