@@ -18,6 +18,7 @@ ASQ()
 .then(function () {emic = require('./emic2.js')})
 .then(function () {report("Modules loaded successfully")})
 //.or(repErr("Module load error"))
+.then(report(emic))
 .then(emic.init())
 .then(app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
