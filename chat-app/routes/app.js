@@ -30,7 +30,7 @@ var EMIC = require('./emic2.js');
 
 
 //var fs = require('fs');
-EMIC.init();
+emic.init();
 
 app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
