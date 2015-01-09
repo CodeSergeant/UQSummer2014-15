@@ -17,28 +17,16 @@ ASQ()
 .then(function () {io = require('socket.io')(http)})
 .then(function () {emic = require('./emic2.js')})
 .then(function () {report("Modules loaded successfully")})
-.or(repErr("Module load error"));
-/*
-var pApp = Promise.resolve(require('express')())
-	.then(global var )
-var app = require('express')()
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var EMIC = require('./emic2.js');
-*/
-
-
-
-//var fs = require('fs');
-report(emic);
-emic.init();
-
-app.get('/', function(req, res){
+.or(repErr("Module load error"))
+.then(emic.init())
+.then(app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
     res.sendFile(__dirname + '/main.html');
 });
-console.log('connection achieved')
+)
+.then(report('connection achieved'))
+.then(
 
 io.on('connection', function(socket){
 
@@ -59,3 +47,4 @@ io.on('connection', function(socket){
 http.listen(3001, function(){
     console.log('listening on *:3001');
 });
+)
