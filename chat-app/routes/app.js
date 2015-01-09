@@ -19,6 +19,7 @@ app.get('/', function(req, res){
     //res.send(html);
     res.sendFile(__dirname + '/main.html');
 });
+
 io.on('connection', function(socket){
 	report('a user connected');
 	socket.on('disconnect', function() {
