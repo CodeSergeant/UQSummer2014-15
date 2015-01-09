@@ -30,6 +30,7 @@ var EMIC = require('./emic2.js');
 
 
 //var fs = require('fs');
+report(emic);
 emic.init();
 
 app.get('/', function(req, res){
