@@ -11,7 +11,7 @@ function repErr (err) {
 	console.error(err)
 };
 
-var app = {};
+var app = require('express')();
 var http = {};
 var io = {};
 var emic = {};
