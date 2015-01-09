@@ -1,8 +1,10 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
 var ASQ = require('asynquence');
-var SerialPort, serialPort;
-
+var SerialPort = require('serialport').SerialPort
+var serialPort = new SerialPort('/dev/ttyAMA0', {
+	baudRate: 9600
+});
 //generic report manager
 function report (msg, reportfn) {
 	reportfn(msg);
@@ -16,10 +18,7 @@ function emicRep (msg) {
 	// body...
 };
 
-SerialPort = require('serialport').SerialPort
-serialPort = new SerialPort('/dev/ttyAMA0', {
-	baudRate: 9600
-});
+
 
 /*
 var app = require('express')();
@@ -145,7 +144,6 @@ emic.callCommands = function () {
 };
 return emic
 }());
-consoleRep(EMIC)
 
 
 /*function writeLog(logFile, output){
