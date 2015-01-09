@@ -17,7 +17,7 @@ ASQ()
 .then(function () {io = require('socket.io')(http)})
 .then(function () {emic = require('./emic2.js')})
 .then(function () {report("Modules loaded successfully")})
-.or(repErr("Module load error"))
+//.or(repErr("Module load error"))
 .then(emic.init())
 .then(app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
