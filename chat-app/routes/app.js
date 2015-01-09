@@ -5,13 +5,16 @@ var ASQ = require('asynquence');
 function report (msg) {
 	console.log(msg)
 };
-report(ASQ)
+report(ASQ);
 
 function repErr (err) {
 	console.error(err)
-}
+};
 
-var app, http, io, emic;
+var app = {};
+var http = {};
+var io = {};
+var emic = {};
 ASQ()
 .then(function () {app = require('express')();
 report(app)})
