@@ -25,25 +25,20 @@ ASQ()
     res.sendFile(__dirname + '/main.html');
 }))
 .then(report('connection achieved'))
-.then(
-
-io.on('connection', function(socket){
-
-	console.log('a user connected');
-	//console.log('hello connection');
-	socket.on('disconnect', function() {
-		console.log('a user disconnected');
-	});
-	socket.on('user message', function(msg){
-		//console.log('hi all');
-		console.log('sendmessage');
-		EMIC.speak(msg);
-		console.log('usermessage: ' + msg);
-		io.emit('user message', msg);
-	});
-});
-
-http.listen(3001, function(){
-    console.log('listening on *:3001');
-});
+.gate(
+	io.on('connection', function(socket){
+		report('a user connected');
+		socket.on('disconnect', function() {
+			report('a user disconnected');
+		});
+		socket.on('user message', function(msg){
+			report('sendmessage');
+			EMIC.speak(msg);
+			report('usermessage: ' + msg);
+			io.emit('user message', msg);
+		});
+	}),
+	http.listen(3001, function(){
+    	report('listening on *:3001');
+	})
 )
