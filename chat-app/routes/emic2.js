@@ -16,16 +16,11 @@ function emicRep (msg) {
 	// body...
 };
 
-ASQ()
-.then(function () {SerialPort = require('serialport').SerialPort})
-.then(function function_name (argument) {
-	// body...
-})
-.then(function () {
-	serialPort = new SerialPort('/dev/ttyAMA0', {
+SerialPort = require('serialport').SerialPort
+serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
-	});
 });
+
 /*
 var app = require('express')();
 var http = require('http').Server(app);
