@@ -150,6 +150,7 @@ emic.callCommands = function () {
 };
 return emic
 }());
+consoleRep(EMIC)
 
 
 /*function writeLog(logFile, output){
