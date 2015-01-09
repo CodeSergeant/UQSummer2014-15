@@ -1,9 +1,32 @@
+//Load modules
 var System = require('systemjs');
-var pApp = Promise.resolve(require('express')());
+var ASQ = require('asynquence');
+
+function report (msg) {
+	console.log(msg)
+};
+
+function repErr (err) {
+	console.err(err)
+}
+
+var app, http, io, emic;
+ASQ()
+.then(function (..) {app = require('express')()})
+.then(function (..) {http = require('http').Server(app)})
+.then(function (..) {io = require('socket.io')(http)}
+.then(function (..) {emic = require('./emic2.js')})
+.then(function (..) {report("Modules loaded successfully")})
+.or(repErr(msg));
+/*
+var pApp = Promise.resolve(require('express')())
+	.then(global var )
 var app = require('express')()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var EMIC = require('./emic2.js');
+*/
+
 
 
 //var fs = require('fs');
