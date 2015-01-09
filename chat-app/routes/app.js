@@ -23,8 +23,7 @@ ASQ()
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
     res.sendFile(__dirname + '/main.html');
-});
-)
+}))
 .then(report('connection achieved'))
 .then(
 
