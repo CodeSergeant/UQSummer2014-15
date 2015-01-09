@@ -32,13 +32,13 @@ report(app)})
 //.or(repErr("Module load error"))
 .then(report(emic))*/
 .then(emic.init())
-.then(
+/*.then(
 	app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
     	res.sendFile(__dirname + '/main.html');
 	})
-)
+)*/
 .then(report('connection achieved'))
 .gate(
 	io.on('connection', function(socket){
