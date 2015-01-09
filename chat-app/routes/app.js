@@ -17,7 +17,7 @@ ASQ()
 .then(function () {io = require('socket.io')(http)}
 .then(function () {emic = require('./emic2.js')})
 .then(function () {report("Modules loaded successfully")})
-.or(repErr(msg));
+.or(repErr(msg))
 /*
 var pApp = Promise.resolve(require('express')())
 	.then(global var )
