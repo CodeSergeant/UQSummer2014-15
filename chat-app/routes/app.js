@@ -6,8 +6,8 @@ function report (msg) {
 	console.log(msg)
 };
 
-function repErr (error) {
-	console.err(error)
+function repErr (err) {
+	console.error(err)
 }
 
 var app, http, io, emic;
