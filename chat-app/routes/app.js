@@ -1,20 +1,18 @@
 //Load modules
 var System = require('systemjs');
 var ASQ = require('asynquence');
-
-function report (msg) {
-	console.log(msg)
-};
-report(ASQ);
-
-function repErr (err) {
-	console.error(err)
-};
-
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var emic = require('./emic2.js');
+
+function report (msg) {
+	console.log(msg)
+};
+
+function repErr (err) {
+	console.error(err)
+};
 
 app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
@@ -28,7 +26,7 @@ io.on('connection', function(socket){
 	});
 	socket.on('user message', function(msg){
 		report('sendmessage');
-		EMIC.speak(msg);
+		emic.speak(msg);
 		report('usermessage: ' + msg);
 		io.emit('user message', msg);
 	});

@@ -1,7 +1,7 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
 var ASQ = require('asynquence');
-var SerialPort = require('serialport').SerialPort
+var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
