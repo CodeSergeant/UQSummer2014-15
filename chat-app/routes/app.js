@@ -1,14 +1,18 @@
-var app = require('express')();
+var System = require('systemjs');
+var pApp = Promise.resolve(require('express')());
+var app = require('express')()
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var EMIC = require('./emic.js');
+var EMIC = require('./emic2.js');
+
+
 //var fs = require('fs');
 EMIC.init();
 
 app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/main.html');
 });
 console.log('connection achieved')
 
