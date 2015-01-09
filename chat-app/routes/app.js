@@ -12,11 +12,11 @@ function repErr (err) {
 
 var app, http, io, emic;
 ASQ()
-.then(function (..) {app = require('express')()})
-.then(function (..) {http = require('http').Server(app)})
-.then(function (..) {io = require('socket.io')(http)}
-.then(function (..) {emic = require('./emic2.js')})
-.then(function (..) {report("Modules loaded successfully")})
+.then(function () {app = require('express')()})
+.then(function () {http = require('http').Server(app)})
+.then(function () {io = require('socket.io')(http)}
+.then(function () {emic = require('./emic2.js')})
+.then(function () {report("Modules loaded successfully")})
 .or(repErr(msg));
 /*
 var pApp = Promise.resolve(require('express')())
