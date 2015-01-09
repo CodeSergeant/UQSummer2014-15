@@ -12,9 +12,9 @@ function repErr (err) {
 };
 
 var app = require('express')();
-var http = require('http').Server(app)};
-var io = require('socket.io')(http)};
-var emic = require('./emic2.js')};
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var emic = require('./emic2.js');
 ASQ()
 /*.then(function () {app = require('express')();
 report(app)})
