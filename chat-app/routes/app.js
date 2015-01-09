@@ -13,6 +13,7 @@ function repErr (err) {
 var app, http, io, emic;
 ASQ()
 .then(function (done) {app = require('express')()})
+.then(report(app))
 .then(function (done) {http = require('http').Server(app)})
 .then(function (done) {io = require('socket.io')(http)})
 .then(function (done) {emic = require('./emic2.js')})
