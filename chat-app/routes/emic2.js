@@ -30,7 +30,6 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
 */
-repEmic('Hello world');
 console.log('Successfully loaded SerialPort module');
 console.log('Successfully initialised /dev/ttyAMA0');
 var EMIC = (function() {
@@ -40,6 +39,7 @@ var emic = {};
 
 emic.init = function () {
 	serialPort.on('open', function () {
+		repEmic('Hello world')
 		console.log('Port is open')
 		isOpen = true;
 		serialPort.on('data', function(msg) {
