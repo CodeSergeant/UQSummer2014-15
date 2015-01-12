@@ -30,7 +30,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
 */
-io.emit('emic message', 'Hello world');
+repEmic('Hello world');
 console.log('Successfully loaded SerialPort module');
 console.log('Successfully initialised /dev/ttyAMA0');
 var EMIC = (function() {

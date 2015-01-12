@@ -1,5 +1,6 @@
 //Load modules
 var System = require('systemjs');
+System.import('es6-shim');
 var ASQ = require('asynquence');
 var app = require('express')();
 var http = require('http').Server(app);
@@ -12,6 +13,9 @@ function report (msg) {
 
 function repErr (err) {
 	console.error(err)
+};
+function repEmic (msg) {
+	io.emit('emic message', msg)
 };
 
 app.get('/', function(req, res){
@@ -26,12 +30,14 @@ io.on('connection', function(socket){
 		report('a user disconnected');
 	});
 	socket.on('user message', function(msg){
-		report('sendmessage');
-		
-		report('usermessage: ' + msg);
+		report('USER: ' + msg);
 		io.emit('user message', msg);
 		emic.speak(msg);
 	});
+	socket.on('emic message', function (msg) {
+		report('EMIC: ' + msg)
+		io.emit('emic message', msg)
+	})
 });
 http.listen(3001, function(){
     report('listening on *:3001');
