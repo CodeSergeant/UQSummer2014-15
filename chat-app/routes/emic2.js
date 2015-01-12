@@ -40,7 +40,7 @@ var counter = 10;
 
 emic.init = function () {
 	serialPort.on('open', function () {
-		repEmic('Hello world')
+		//repEmic('Hello world')
 		console.log('Port is open')
 		isOpen = true;
 		serialPort.on('data', function(msg) {
