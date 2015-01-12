@@ -15,9 +15,10 @@ function repErr (err) {
 	console.error(err)
 };
 function repEmic (msg) {
-	io.emit('emic message', msg)
+	report('hello to all from EMIC');
+	io.emit('emic message', msg);
 };
-
+emic.init();
 app.get('/', function(req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
@@ -32,7 +33,7 @@ io.on('connection', function(socket){
 	socket.on('user message', function(msg){
 		report('USER: ' + msg);
 		io.emit('user message', msg);
-		emic.speak(msg);
+		//emic.speak(msg);
 	});
 	socket.on('emic message', function (msg) {
 		report('EMIC: ' + msg)
