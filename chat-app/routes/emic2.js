@@ -28,7 +28,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 */
 report('Successfully loaded SerialPort module');
 report('Successfully initialised /dev/ttyAMA0');
-var EMIC = (function() {
+var EMIC = (function(socket) {
 var isOpen = false;
 var isReady = true;
 var emic = {};
