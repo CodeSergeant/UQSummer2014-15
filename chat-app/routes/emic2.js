@@ -29,6 +29,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 report('Successfully loaded SerialPort module');
 report('Successfully initialised /dev/ttyAMA0');
 module.exports = function (socket) {
+	report(socket);
 	return {
 		init: function () {
 			serialPort.on('open', function () {
