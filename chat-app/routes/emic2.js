@@ -50,7 +50,7 @@ emic.init = function () {
 		});
 		while (counter > 0) {
 			counter -= 1;
-			repEmic('hello');
+			emicRep('hello');
 			setTimeout(1000);
 		};
 
