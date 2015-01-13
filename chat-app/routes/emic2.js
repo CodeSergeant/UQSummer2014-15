@@ -28,8 +28,11 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 */
 report('Successfully loaded SerialPort module');
 report('Successfully initialised /dev/ttyAMA0');
-module.exports = function (socket) {
-	report(socket);
+module.exports = function (io) {
+	io.on('connection', function (socket) {
+		report('EMIC is connected');
+		io.emit('emic message', 'hello world from emic');
+	})
 	return {
 		init: function () {
 			serialPort.on('open', function () {
