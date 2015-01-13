@@ -5,7 +5,7 @@ var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
-var io = require('socket.io');
+var io = require('socket.io')();
 
 function report (msg) {
 	console.log(msg)
