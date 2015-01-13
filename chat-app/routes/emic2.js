@@ -30,8 +30,11 @@ report('Successfully loaded SerialPort module');
 report('Successfully initialised /dev/ttyAMA0');
 module.exports = function (io) {
 	io.on('connection', function (socket) {
-		report('EMIC is connected');
+		//report('EMIC is connected');
 		io.emit('emic message', 'hello world from emic');
+		io.on('user message', function (msg) {
+			io.emit('emic message', eval('ECHO: ' + msg));
+		});
 	})
 	return {
 		init: function () {
