@@ -14,11 +14,11 @@ function report (msg) {
 };
 
 function emicRep (msg) {
-	io.emit('emic message', msg);
+	//io.emit('emic message', msg);
 };
 
 http.listen(3001, function(){
-    report('listening on *:3001');
+    report('EMIC: listening on *:3001');
 });
 
 io.on('connection', function (req, res) {
