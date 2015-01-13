@@ -79,6 +79,7 @@ emic.speak = function (data) {
 		serialPort.write(':S' + data + '\r');
 		console.log(':S' + data + '\r');
 		isReady = false
+		
 		console.log('Emic is busy')
 		io.emit('emic message', 'Emic is busy')
 	};
