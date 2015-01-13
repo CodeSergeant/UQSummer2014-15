@@ -48,11 +48,6 @@ emic.init = function () {
 				console.log('Emic is ready for an instruction')
 			} else { console.log('errorcheck '+msg)}
 		});
-		while (counter > 0) {
-			counter -= 1;
-			emicRep('hello');
-			setTimeout(1000);
-		};
 
 		//serialPort.write(':P0\r');
 		//serialPort.drain();
