@@ -1,5 +1,6 @@
 #!/bin/bash
 # autoscript for chat-app
 
+cd ~/UQSummer2014-15/chat-app/routes
 git pull
 node app.js
