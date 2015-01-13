@@ -51,7 +51,8 @@ module.exports = function (socket) {
 		serialPort.write(':S[:PHONE ON] [:nv] [:dv gn 75] [wiy<400,20>wih<300,25>sh<100>yu<200>ax<200,27>meh<200,25>riy<200,24>krih<300,22>s<100>mah<300>s<100>wih<400>wih<300,27>sh<100>yu<200>ax<200,29>meh<200,27>riy<200,25>krih<300,24>s<100>mah<300,20>s<100>wih<400>wih<300,29>sh<100>yu<200>ax<200,30>meh<200,29>riy<200,27>KRIH<300,25>S<100>MAH<300,22>S<100>AE<100,20>N<50>D<50>AX<200>HXAE<400,22>PIY<400,27>NUW<400,24>YXIR<600,25>_<100>]. [GUH<300,20>D<100>TAY<400,25>DIH<200>NX<100>Z<100>TUW<400>YU<800,24>WER<400>EH<400,25>VRR<400,24>YU<400,22>AR<800,20>GUH<300,27>D<100>TAY<400,29>DIH<200,27>NX<100>Z<100>FOR<400,25>KRIH<300,32>S<100>MAH<300,20>S<100>AE<100>N<50>D<50>AX<200>HXAE<400,22>PIY<400,27>NUW<400,24>YXIR<600,25>_<100>]. [WIY<400,20>WIH<300,25>SH<100>YU<200>AX<200,27>MER<200,25>RIY<200,24>KRIH<300,22>S<100>MAH<300>S<100>WIY<400>WIH<300,27>SH<100>YU<200>AX<200,29>MEH<200,27>RIY<200,25>KRIH<300,24>S<100>MAH<300,20>S<100>WIY<400>WIH<300,29>SH<100>YU<200>AX<200,30>MEH<200,29>RIY<200,27>KRIH<300,25>S<100>MAH<300,22>S<100>AE<100,20>N<50>D<50>AX<200>HXAE<400,22>PIY<400,27>NUW<400,24>YXIR<800,25>].\r');
 		*/
 			
-		};
+		}
+
 		speak: function (data) {
 			data = data.toString('ascii');
 			while (isOpen == false) {};
@@ -66,7 +67,7 @@ module.exports = function (socket) {
 				console.log('Emic is busy')
 				io.emit('emic message', 'Emic is busy')
 			};
-		};
+		}
 
 		demo: function (id) {
 			id = id.toString('ascii');
@@ -75,15 +76,15 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		};
+		}
 
 		stopNow: function () {
 			serialPort.write(':X\r');
-		};
+		}
 
 		pause: function () {
 			serialPort.write(':Z\r');
-		};
+		}
 
 		voice: function (id) {
 			var idN = id.parseInt();
@@ -93,7 +94,7 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		};
+		}
 
 		volume: function (level) {
 			var levelN = id.parseInt();
@@ -103,7 +104,7 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		};
+		}
 
 		rate: function (wpm) {
 			var wpmN = wpm.parseInt();
@@ -113,7 +114,7 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		};
+		}
 
 		parser: function (id) {
 			id = id.toString('ascii');
@@ -122,23 +123,23 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		};
+		}
 
 		revert: function () {
 			serialPort.write(':R\r');
-		};
+		}
 
 		callCurrentSettings: function () {
 			serialPort.write(':C\r');
-		};
+		}
 
 		callVersionInfo:function () {
 			serialPort.write(':I\r');
-		};
+		}
 
 		callCommands: function () {
 			serialPort.write(':I\r');
-		};
+		}
 	};
 };
 
