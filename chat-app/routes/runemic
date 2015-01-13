@@ -1,0 +1,5 @@
+#!/bin/bash
+# autoscript for chat-app
+
+git pull
+node app.js
