@@ -5,9 +5,7 @@ var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io');
 
 function report (msg) {
 	console.log(msg)
@@ -16,14 +14,7 @@ function report (msg) {
 function emicRep (msg) {
 	//io.emit('emic message', msg);
 };
-
-http.listen(3001, function(){
-    report('EMIC: listening on *:3001');
-});
-
-io.on('connection', function (req, res) {
-	report('EMIC is connected')
-})
+io.emit('emic message', 'hello to all from emic');
 
 /*
 var app = require('express')();
