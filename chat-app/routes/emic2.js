@@ -33,7 +33,7 @@ module.exports = function (io) {
 		//report('EMIC is connected');
 		io.emit('emic message', 'hello world from emic');
 		socket.on('user message', function (msg) {
-			io.emit('emic message', eval('ECHO: ' + msg));
+			io.emit('emic message', 'ECHO: ' + msg);
 		});
 	})
 	return {
