@@ -19,18 +19,18 @@ function repEmic (msg) {
 	io.emit('emic message', msg);
 };
 emic.init();
-app.get('/', function(req, res){
+app.get('/', function (req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
     res.sendFile(__dirname + '/main.html');
 });
 
-io.on('connection', function(socket){
+io.on('connection', function (socket){
 	report('a user connected');
 	socket.on('disconnect', function() {
 		report('a user disconnected');
 	});
-	socket.on('user message', function(msg){
+	socket.on('user message', function (msg){
 		report('USER: ' + msg);
 		io.emit('user message', msg);
 		//emic.speak(msg);
@@ -40,7 +40,7 @@ io.on('connection', function(socket){
 		io.emit('emic message', msg)
 	})
 });
-http.listen(3001, function(){
+http.listen(3001, function (){
     report('listening on *:3001');
 });
 

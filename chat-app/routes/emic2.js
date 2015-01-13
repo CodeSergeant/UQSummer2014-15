@@ -5,20 +5,25 @@ var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
-//generic report manager
-function report (msg, reportfn) {
-	reportfn(msg);
-};
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-function consoleRep (msg) {
+function report (msg) {
 	console.log(msg)
 };
 
 function emicRep (msg) {
-	// body...
+	io.emit('emic message', msg);
 };
 
+http.listen(3001, function(){
+    report('listening on *:3001');
+});
 
+io.on('connection', function (req, res) {
+	report('EMIC is connected')
+})
 
 /*
 var app = require('express')();
@@ -30,8 +35,8 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
 */
-console.log('Successfully loaded SerialPort module');
-console.log('Successfully initialised /dev/ttyAMA0');
+report('Successfully loaded SerialPort module');
+report('Successfully initialised /dev/ttyAMA0');
 var EMIC = (function() {
 var isOpen = false;
 var isReady = true;
@@ -41,7 +46,7 @@ var counter = 10;
 emic.init = function () {
 	serialPort.on('open', function () {
 		//repEmic('Hello world')
-		console.log('Port is open')
+		report('Port is open')
 		isOpen = true;
 		serialPort.on('data', function(msg) {
 			msg = msg.toString('ascii');
