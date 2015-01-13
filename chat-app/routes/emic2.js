@@ -32,7 +32,7 @@ module.exports = function (io) {
 	io.on('connection', function (socket) {
 		//report('EMIC is connected');
 		io.emit('emic message', 'hello world from emic');
-		io.on('user message', function (msg) {
+		socket.on('user message', function (msg) {
 			io.emit('emic message', eval('ECHO: ' + msg));
 		});
 	})
