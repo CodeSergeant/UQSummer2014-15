@@ -1,7 +1,7 @@
 //Load modules
-var System = require('systemjs');
-System.import('es6-shim');
-var ASQ = require('asynquence');
+//var System = require('systemjs');
+//System.import('es6-shim');
+//var ASQ = require('asynquence');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);

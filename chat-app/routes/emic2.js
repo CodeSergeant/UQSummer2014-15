@@ -1,6 +1,6 @@
 //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
 // rx (input) is pin10
-var ASQ = require('asynquence');
+//var ASQ = require('asynquence');
 var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
@@ -79,7 +79,7 @@ emic.speak = function (data) {
 		serialPort.write(':S' + data + '\r');
 		console.log(':S' + data + '\r');
 		isReady = false
-		
+
 		console.log('Emic is busy')
 		io.emit('emic message', 'Emic is busy')
 	};
