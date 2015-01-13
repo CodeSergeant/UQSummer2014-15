@@ -67,7 +67,7 @@ module.exports = function (socket) {
 				console.log('Emic is busy')
 				io.emit('emic message', 'Emic is busy')
 			};
-		}
+		},
 
 		demo: function (id) {
 			id = id.toString('ascii');
@@ -76,15 +76,15 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		}
+		},
 
 		stopNow: function () {
 			serialPort.write(':X\r');
-		}
+		},
 
 		pause: function () {
 			serialPort.write(':Z\r');
-		}
+		},
 
 		voice: function (id) {
 			var idN = id.parseInt();
@@ -94,7 +94,7 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		}
+		},
 
 		volume: function (level) {
 			var levelN = id.parseInt();
@@ -104,7 +104,7 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		}
+		},
 
 		rate: function (wpm) {
 			var wpmN = wpm.parseInt();
@@ -114,7 +114,7 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		}
+		},
 
 		parser: function (id) {
 			id = id.toString('ascii');
@@ -123,19 +123,19 @@ module.exports = function (socket) {
 			} else {
 				console.log('Error: Invalid Command');
 			};
-		}
+		},
 
 		revert: function () {
 			serialPort.write(':R\r');
-		}
+		},
 
 		callCurrentSettings: function () {
 			serialPort.write(':C\r');
-		}
+		},
 
 		callVersionInfo:function () {
 			serialPort.write(':I\r');
-		}
+		},
 
 		callCommands: function () {
 			serialPort.write(':I\r');
