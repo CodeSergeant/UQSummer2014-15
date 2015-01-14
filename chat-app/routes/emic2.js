@@ -76,6 +76,10 @@ module.exports = function (io) {
 			};
 		},
 
+		report: function (msg) {
+			io.emit('emic message', msg);
+		},
+
 		demo: function (id) {
 			id = id.toString('ascii');
 			if (id == '0' || id == '1' || id == '2') {
