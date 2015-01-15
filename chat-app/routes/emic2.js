@@ -70,7 +70,7 @@ module.exports = function (io) {
 	
 	function emicCom (obj, callback) {
 		isReady = false;
-		obj.port.write(obj.data);
+		obj.port.write(obj.sumo);
 		while (isReady = false) {
 			setTimeout( function () {}, 50);
 		}
@@ -101,7 +101,7 @@ module.exports = function (io) {
 		if (id == '0' || id == '1' || id == '2') {
 			emicCom({
 				port: serialPort, 
-				sumo: comstr
+				data: comstr
 			}, report('Changed voice to: ' + data));
 		} else {
 			report('Error: Invalid Command');
