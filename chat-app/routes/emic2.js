@@ -277,7 +277,7 @@ module.exports = function (io) {
 				msg = msg.toString('ascii');
 				if (msg == ':') {
 					console.log('Emic is ready for an instruction')
-				} elseif (msg == ':?') {
+				} else if (msg == ':?') {
 					report('Invalid instruction');
 				} else {
 					report(msg);
