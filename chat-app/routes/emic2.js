@@ -70,7 +70,7 @@ module.exports = function (io) {
 	
 	function emicCom (obj, callback) {
 		isReady = false;
-		obj.port.write(obj.sumo);
+		obj.port.write(obj.data);
 		while (isReady = false) {
 			setTimeout( function () {}, 50);
 		}
