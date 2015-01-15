@@ -91,11 +91,11 @@ module.exports = function (io) {
 		};
 	},
 
-	EMIC.prototype.report = function (msg) {
+	EMIC.report = function (msg) {
 		io.emit('emic message', msg);
 	};
 
-	EMIC.prototype.demo = function (id) {
+	EMIC.demo = function (id) {
 		id = id.toString('ascii');
 		if (id == '0' || id == '1' || id == '2') {
 			emicCom({
@@ -107,14 +107,14 @@ module.exports = function (io) {
 		};
 	};
 
-	EMIC.prototype.stopNow = function () {
+	EMIC.stopNow = function () {
 		emicCom({
 			port: serialPort,
 			data: ':X\r'
 		}, report('EMIC has stopped'));
 	};
 
-	EMIC.prototype.pause = function () {
+	EMIC.pause = function () {
 		emicCom({
 			port: serialPort,
 			data: ':Z\r'
@@ -122,7 +122,7 @@ module.exports = function (io) {
 			Use the pause command to resume'));
 	};
 
-	EMIC.prototype.voice = function (id) {
+	EMIC.voice = function (id) {
 		var idN = id.parseInt();
 		if (idN >= 0 && idN <= 8) {
 			id.toString('ascii');
@@ -136,7 +136,7 @@ module.exports = function (io) {
 		};
 	};
 
-	EMIC.prototype.volume = function (level) {
+	EMIC.volume = function (level) {
 		var levelN = id.parseInt();
 		if (levelN >= -48 && levelN <= 18) {
 			level = level.toString('ascii');
@@ -150,7 +150,7 @@ module.exports = function (io) {
 		};
 	};
 
-	EMIC.prototype.rate = function (wpm) {
+	EMIC.rate = function (wpm) {
 		var wpmN = wpm.parseInt();
 		if (wpmN >= 75 && wpmN <= 600) {
 			wpm = wpm.toString('ascii');
@@ -164,7 +164,7 @@ module.exports = function (io) {
 		};
 	};
 
-	EMIC.prototype.chooseParser = function (id) {
+	EMIC.chooseParser = function (id) {
 		id = id.toString('ascii');
 		if (parser == '0' || parser == '1' || parser == '2') {
 			emicCom({
@@ -177,35 +177,35 @@ module.exports = function (io) {
 		};
 	};
 
-	EMIC.prototype.revert = function () {
+	EMIC.revert = function () {
 		emicCom({
 			port: serialPort,
 			data: ':R\r'
 		}, report('EMIC has been reverted to the default settings'));
 	};
 
-	EMIC.prototype.callCurrentSettings = function () {
+	EMIC.callCurrentSettings = function () {
 		emicCom({
 			port: serialPort,
 			data: ':C\r'
 		}, function () {});
 	};
 
-	EMIC.prototype.callVersionInfo = function () {
+	EMIC.callVersionInfo = function () {
 		emicCom({
 			port: serialPort,
 			data: ':I\r'
 		}, function () {});
 	};
 
-	EMIC.prototype.callCommands = function () {
+	EMIC.callCommands = function () {
 		emicCom({
 			port: serialPort,
 			data: ':H\r'
 		}, function () {});
 	};
 
-	EMIC.prototype.parse = function (msg) {
+	EMIC.parse = function (msg) {
 		msgEdit = msg.toString('ascii').trim();
 		args = msg.split(' ');
 		while ((args.length != 0) && (args[0].search(':') != -1)) {
