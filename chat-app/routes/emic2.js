@@ -5,6 +5,7 @@ var SerialPort = require('serialport').SerialPort;
 var serialPort = new SerialPort('/dev/ttyAMA0', {
 	baudRate: 9600
 });
+var async = require('async');
 //var io = require('socket.io')();
 
 function report (msg) {
@@ -29,6 +30,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 report('Successfully loaded SerialPort module');
 report('Successfully initialised /dev/ttyAMA0');
 module.exports = function (io) {
+	var masterqueue = async.queue()
 	io.on('connection', function (socket) {
 		//report('EMIC is connected');
 		io.emit('emic message', 'hello world from emic');
@@ -36,7 +38,7 @@ module.exports = function (io) {
 			io.emit('emic message', 'ECHO: ' + msg);
 		});
 	})
-	return {
+	var EMIC = {
 		init: function () {
 			serialPort.on('open', function () {
 				//repEmic('Hello world')
@@ -144,14 +146,99 @@ module.exports = function (io) {
 			serialPort.write(':C\r');
 		},
 
-		callVersionInfo:function () {
+		callVersionInfo: function () {
 			serialPort.write(':I\r');
 		},
 
 		callCommands: function () {
 			serialPort.write(':I\r');
+		},
+
+		executeFn: function (arr) {
+			var num = arr.length
+			var execStr = 'this.'
+			var firstArg = arr[0].toString('ascii');
+			switch (arr.length) {
+				case 1:
+					execStr = execStr + firstArg + '()';
+					eval(execStr);
+					break;
+				case 2:
+					execStr = execStr + firstArg + '('
+						+ arr[1].toString('ascii') + ')';
+					eval(execStr);
+					break;
+				default:
+					execStr = execStr + firstArg + '(['
+						+ arr.splice(0,1).join() + '])';
+					eval(execStr);
+					break;
+			}
+		},
+
+		parser: function (msg) {
+			msgEdit = msg.toString('ascii').trim();
+			args = msg.split(' ');
+			while ((args.length != 0) && (args[0].search(':') != -1)) {
+				switch(args[0].split(':')[0].toLowerCase()) {
+					case 'demo':
+						this.demo(args[1]);
+						args.splice(0,2);
+						break;
+					case 'stop':
+						this.stopNow();
+						args.splice(0,1);
+						break;
+					case 'pause':
+						this.pause();
+						args.splice(0,1);
+						break;
+					case 'voice':
+						this.voice(args[1]);
+						args.splice(0,2);
+						break;
+					case 'volume':
+						this.volume(args[1]);
+						args.splice(0,2);
+						break;
+					case 'rate':
+						this.rate(args[1]);
+						args.splice(0,2);
+						break;
+					case 'parser':
+						this.parser(args[1]);
+						args.splice(0,2);
+						break;
+					case 'revert':
+						this.revert();
+						args.splice(0,1);
+						break;
+					case 'settings':
+						this.callCurrentSettings();
+						args.splice(0,1);
+						break;
+					case 'version':
+						this.callVersionInfo();
+						args.splice(0,1);
+						break;
+					case 'commands':
+						this.callCommands();
+						args.splice(0,1);
+						break;
+					default:
+						this.report('Invalid Command');
+						this.speak(args.join(''));
+						args = [];
+						break;
+				}
+			}
+			this.speak(args.join(''));
+			args = [];
 		}
 	};
+	EMIC.masterqueue = async.queue(EMIC.executeFn, 1);
+	EMIC.masterqueue.
+	return EMIC;
 };
 
 

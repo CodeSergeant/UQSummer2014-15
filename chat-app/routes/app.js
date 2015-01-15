@@ -6,6 +6,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var emic = require('./emic2.js')(io);
+var emic = require('./emicparser.js')(io);
 
 function report (msg) {
 	console.log(msg)
