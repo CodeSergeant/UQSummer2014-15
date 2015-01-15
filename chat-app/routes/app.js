@@ -19,7 +19,6 @@ function repEmic (msg) {
 	report('hello to all from EMIC');
 	io.emit('emic message', msg);
 };
-emic.init();
 app.get('/', function (req, res){
     //var html = fs.readFileSync("index3.html", "utf8");
     //res.send(html);
