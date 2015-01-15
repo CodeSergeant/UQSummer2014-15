@@ -101,7 +101,7 @@ module.exports = function (io) {
 		if (id == '0' || id == '1' || id == '2') {
 			emicCom({
 				port: serialPort, 
-				data: comstr
+				sumo: comstr
 			}, report('Changed voice to: ' + data));
 		} else {
 			report('Error: Invalid Command');
