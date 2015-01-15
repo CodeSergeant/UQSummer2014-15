@@ -97,10 +97,11 @@ module.exports = function (io) {
 
 	EMIC.demo = function (id) {
 		id = id.toString('ascii');
+		comstr = ':D' + id + '\r'
 		if (id == '0' || id == '1' || id == '2') {
 			emicCom({
 				port: serialPort, 
-				data: ':D' + id + '\r'
+				data: comstr
 			}, report('Changed voice to: ' + data));
 		} else {
 			report('Error: Invalid Command');
