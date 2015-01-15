@@ -102,7 +102,7 @@ module.exports = function (io) {
 			emicCom({
 				port: serialPort, 
 				data: comstr
-			}, report('Changed voice to: ' + data));
+			}, report('Changed voice to: ' + id));
 		} else {
 			report('Error: Invalid Command');
 		};
