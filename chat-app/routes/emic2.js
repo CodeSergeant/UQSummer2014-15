@@ -79,7 +79,7 @@ module.exports = function (io) {
 
 	var EMIC = {};
 
-	EMIC.prototype.speak = function (data) {
+	EMIC.speak = function (data) {
 		data = data.toString('ascii');
 		if (data.length > 1000) {
 			report('Warning: Message exceeds 1000 characters');
