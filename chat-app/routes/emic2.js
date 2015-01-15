@@ -49,10 +49,7 @@ module.exports = function (io) {
 		callback();
 	};
 
-	function report (msg) {
-		io.emit('emic message', msg);
-		console.log('EMIC: ' + msg);
-	};
+
 
 	var SerialPort = require('serialport').SerialPort;
 	var serialPort = new SerialPort('/dev/ttyAMA0', {
@@ -78,6 +75,10 @@ module.exports = function (io) {
 	};
 
 	var EMIC = {};
+	EMIC.report = function (msg) {
+		io.emit('emic message', msg);
+		console.log('EMIC: ' + msg);
+	};
 
 	EMIC.speak = function (data) {
 		data = data.toString('ascii');
