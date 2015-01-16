@@ -79,6 +79,10 @@ module.exports = function (io) {
 	};
 
 	var EMIC = {};
+	
+	EMIC.report = function (msg) {
+		io.emit('emic message', msg);
+	};
 
 	EMIC.speak = function (data) {
 		data = data.toString('ascii');
@@ -88,13 +92,13 @@ module.exports = function (io) {
 			masterqueue.push({
 				port: serialPort,
 				data: ':S' + data + '\r'
-			}, report('Finished reading: ' + data));
+			}, function () {
+				report('Finished reading: ' + data)
+			});
 		};
 	},
 
-	EMIC.report = function (msg) {
-		io.emit('emic message', msg);
-	};
+
 
 	EMIC.demo = function (id) {
 		id = id.toString('ascii');
@@ -103,7 +107,7 @@ module.exports = function (io) {
 			console.log(this.report);
 			emicCom({
 				port: serialPort, 
-				data: comstr
+				data: ':D' + id + '\r'
 			}, function () {
 				report('Changed voice to: ' + id)
 			});
@@ -116,15 +120,19 @@ module.exports = function (io) {
 		emicCom({
 			port: serialPort,
 			data: ':X\r'
-		}, report('EMIC has stopped'));
+		}, function () {
+			report('EMIC has stopped');
+		});
 	};
 
 	EMIC.pause = function () {
 		emicCom({
 			port: serialPort,
 			data: ':Z\r'
-		}, report('EMIC has been paused. \
-			Use the pause command to resume'));
+		}, function () {
+			report('EMIC has been paused. \
+			Use the pause command to resume')
+		});
 	};
 
 	EMIC.voice = function (id) {
@@ -134,8 +142,10 @@ module.exports = function (io) {
 			emicCom({
 				port: serialPort,
 				data: ':N' + id + '\r'
-			}, report('The speaking voice has \
-				been changed to: ' + id));
+			}, function () {
+				report('The speaking voice has \
+				been changed to: ' + id)
+			});
 		} else {
 			report('Error: Invalid Command');
 		};
@@ -148,8 +158,10 @@ module.exports = function (io) {
 			emicCom({
 				port: serialPort,
 				data: ':V' + level + '\r'
-			}, report('The volume has been changed to: ' 
-				+ level + ' dB'));
+			}, function () {
+				report('The volume has been changed to: ' 
+				+ level + ' dB')
+			});
 		} else {
 			report('Error: Invalid Command');
 		};
@@ -162,8 +174,10 @@ module.exports = function (io) {
 			emicCom({
 				port: serialPort,
 				data: ':W' + wpm + '\r'
-			}, report('The speaking rate has been changed to: ' 
-				+ wpm + ' wpm'));
+			}, function () {
+				report('The speaking rate has been changed to: ' 
+				+ wpm + ' wpm')
+			});
 		} else {
 			report('Error: Invalid Command');
 		};
@@ -175,8 +189,10 @@ module.exports = function (io) {
 			emicCom({
 				port: serialPort,
 				data: ':P' + id + '\r'
-			}, report('The parser has been changed to: '
-				+ id));
+			}, function () {
+				report('The parser has been changed to: '
+				+ id)
+			});
 		} else {
 			report('Error: Invalid Command');
 		};
@@ -186,7 +202,9 @@ module.exports = function (io) {
 		emicCom({
 			port: serialPort,
 			data: ':R\r'
-		}, report('EMIC has been reverted to the default settings'));
+		}, function () {
+			report('EMIC has been reverted to the default settings')
+		});
 	};
 
 	EMIC.callCurrentSettings = function () {
