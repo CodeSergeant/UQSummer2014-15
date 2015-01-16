@@ -26,7 +26,7 @@ var serialPort = new SerialPort('/dev/ttyAMA0', {
 
 
 module.exports = function (io) {
-	function executeFn (arr, callback) {
+	/*function executeFn (arr, callback) {
 		var num = arr.length
 		var execStr = 'EMIC.'
 		var firstArg = arr[0].toString('ascii');
@@ -47,7 +47,7 @@ module.exports = function (io) {
 				break;
 		};
 		callback();
-	};
+	};*/
 
 	function report (msg) {
 		io.emit('emic message', msg);
@@ -102,9 +102,9 @@ module.exports = function (io) {
 			emicCom({
 				port: serialPort, 
 				data: comstr
-			}, report('Changed voice to: ' + id));
+			}, this.report('Changed voice to: ' + id));
 		} else {
-			report('Error: Invalid Command');
+			this.report('Error: Invalid Command');
 		};
 	};
 
