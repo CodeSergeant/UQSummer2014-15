@@ -105,10 +105,10 @@ module.exports = function (io) {
 				port: serialPort, 
 				data: comstr
 			}, function () {
-				this.report('Changed voice to: ' + id)
+				report('Changed voice to: ' + id)
 			});
 		} else {
-			this.report('Error: Invalid Command');
+			report('Error: Invalid Command');
 		};
 	};
 
