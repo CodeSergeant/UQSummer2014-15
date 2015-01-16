@@ -294,7 +294,9 @@ module.exports = function (io) {
 			EMIC.parse(msg);
 			io.emit('emic message', 'ECHO: ' + msg);
 		});
-		serialPort.on('open', function () {
+		
+	});
+	serialPort.on('open', function () {
 			isReady = true;
 			report('Port is open')
 			serialPort.on('data', function(msg) {
@@ -310,7 +312,6 @@ module.exports = function (io) {
 				isReady = true
 				serialPort.flush();
 			});
-		});
 	});
 	return EMIC;
 };
