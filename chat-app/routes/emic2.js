@@ -100,6 +100,7 @@ module.exports = function (io) {
 		id = id.toString('ascii');
 		comstr = ':D' + id + '\r'
 		if (id == '0' || id == '1' || id == '2') {
+			console.log(this.report);
 			emicCom({
 				port: serialPort, 
 				data: comstr
