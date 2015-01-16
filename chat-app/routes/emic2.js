@@ -79,7 +79,7 @@ module.exports = function (io) {
 	};
 
 	var EMIC = {};
-	
+
 	EMIC.report = function (msg) {
 		io.emit('emic message', msg);
 	};
@@ -152,7 +152,7 @@ module.exports = function (io) {
 	};
 
 	EMIC.volume = function (level) {
-		var levelN = id.parseInt();
+		var levelN = level.parseInt();
 		if (levelN >= -48 && levelN <= 18) {
 			level = level.toString('ascii');
 			emicCom({
