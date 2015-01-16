@@ -298,6 +298,7 @@ module.exports = function (io) {
 			report('Port is open')
 			serialPort.on('data', function(msg) {
 				msg = msg.toString('ascii');
+				console.log('emicSerial: ' + msg);
 				if (msg == ':') {
 					console.log('Emic is ready for an instruction')
 				} else if (msg == ':?') {
