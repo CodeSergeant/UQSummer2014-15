@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - emiclite.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>emiclite.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">67.91</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">317</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">31.23</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.45</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">//Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
+// rx (input) is pin10
+
+// Import libraries/modules
+var EventEmitter = require(&#039;events&#039;).EventEmitter;
+var util = require(&#039;util&#039;);
+var async = require(&#039;async&#039;);
+var SerialPort = require(&#039;serialport&#039;).SerialPort;
+var mqtt = require(&#039;mqtt&#039;);
+var hardwareConfig = require(&#039;./hardwareConfig.json&#039;);
+var messageConfig = require(&#039;./messageConfig.json&#039;);
+
+/*// Default Operational Configs
+var dServer = &#039;mqtt://winter.ceit.uq.edu.au&#039;;
+var dMqttInputSubscription = &#039;emic-in&#039;;
+var dMqttOutputSubscription = &#039;emic-out&#039;;
+var dSerialPort = &#039;/dev/ttyAMA0&#039;;
+var dBaudRate = 9600;
+
+// Default Message Configs
+var dPriority = 4;
+var dAlgorithm = 1;
+var dSpeaker = 0;
+var dLanguage = 0;
+var dVolume = 0;
+var dRate = 200;
+var dText = &#039;Hello World&#039;;
+
+// EMIC Config Rules
+var minPriority = 1;
+var maxPriority = 4;
+var minAlgorithm = 0;
+var maxAlgorithm = 1;
+var minSpeaker = 0;
+var maxSpeaker = 8;
+var minLanguage = 0;
+var maxLanguage = 2;
+var minVolume = -48;
+var maxVolume = 10;
+var minRate = 75;
+var maxRate = 600;
+var minTextLength = 0;
+var maxTextLength = 1000;
+
+// EMIC key table
+var keyTable = {
+
+}
+*/
+// Configure mqtt client
+var client = mqtt.connect(dServer);
+client.subscribe(dMqttInputSubscription);
+
+
+// Initialise serial port
+var serialPort = new SerialPort(dSerialPort, {
+	baudRate: dBaudRate
+});
+
+// Reporting helper functions
+function emicReport (msg) {
+	client.publish(dMqttOutputSubscription, msg);
+	console.log(msg);
+};
+
+// Initialise masterQueue - for each message and its corresponding properties
+var masterQueue = new async.queue(function (msg, callback) {
+	masterQueueWorker(msg, callback);
+}, 1);
+masterQueue.drain = function () {
+	console.log(&#039;masterQueue has finished&#039;);
+}
+
+//masterQueue.pause();
+
+// Initialise hardwareQueue - for each write to serialPort
+var hardwareQueue = new async.queue(function (msg, callback) {
+	hardwareQueueWorker(msg, callback)
+}, 1);
+
+//hardwareQueue.pause();
+
+// define master queue worker
+
+function masterQueueWorker (messageArray, callback) {
+	var messageArray = messageArray;
+	console.log(&#039;there are %s tasks in the masterQueue&#039;, masterQueue.length())
+	//console.log(&#039;get ready for the messageArray&#039;);
+	console.log(messageArray);
+	//console.log(&#039;this is inside the masterQueue&#039;);
+	for (var i = 0; i &lt; messageArray.length; i++) {
+		//console.log(&#039;the &#039; + i + &#039; element is \&#039;&#039; + messageArray[i] + &#039;\&#039;&#039;);
+		hardwareQueue.push(messageArray[i], function (err) {
+			if (err) {
+				emicReport(err);
+				console.error(err);
+			} else {
+				//console.log(messageArray[i]);
+				//console.log(&#039;Pushed: &#039; + messageArray[i] + 
+				//	&#039; to &#039; + dSerialPort);
+			};
+		});
+	};
+	//masterQueue.pause();
+	hardwareQueue.drain = function () {
+		console.log(&#039;the hardwareQueue is empty&#039;)
+		callback(null);
+		//masterQueue.resume();
+		hardwareQueue.kill();
+	};
+	//masterQueue.pause();
+};
+
+function hardwareQueueWorker (message, callback) {
+	console.log(&#039;%s tasks remain in the hardwareQueue&#039;, hardwareQueue.length())
+	serialPort.write(message);
+	hardwareQueue.pause();
+	callback(null);
+};
+
+
+
+serialPort.on(&#039;open&#039;, function() {
+	serialPort.write(&#039;:&#039;);
+	serialPort.write(&#039;SHello everyone.\n&#039;)
+	emicReport(&#039;Serial Port is now open&#039;);
+	//masterQueue.resume();
+	hardwareQueue.resume();
+
+	serialPort.on(&#039;error&#039;, function(err) {
+		console.error(err);
+	});
+
+	serialPort.on(&#039;data&#039;, function(data) {
+		console.log(&#039;Got data from serial port: %s\n&#039;, 
+			JSON.stringify(data.toString()), data);
+		hardwareQueue.resume();
+	});
+});
+var testMessage = {
+	volume: 3,
+	speaker: 3,
+	text: &#039;10,000 reasons&#039;
+}
+client.publish(dMqttOutputSubscription, &#039;hello&#039;);
+client.on(&#039;connect&#039;, function () {
+	console.log(&#039;Connection succesful&#039;);
+	client.publish(dMqttInputSubscription, JSON.stringify(testMessage));
+})
+
+client.on(&#039;message&#039;, function (topic, msg) {
+ 	//message is given as buffer
+ 	//emicReport(msg);
+ 	var messageObject = {};
+ 	try {
+ 		messageObject = JSON.parse(msg);
+ 	} catch(err) {
+ 		//emicReport(msg + &#039; is not an object&#039;);
+ 	}
+ 	console.log(msg.toString());
+ 	//console.log(messageObject.volume);
+ 	var messageArray = [];	// used to store the strings that will be writen
+ 								// to the serial port
+ 	var internalMessageObject = {};
+
+ 	/*var priority = messageObject.p ||
+ 		messageObject.priority || dPriority;
+ 		
+ 	var algorithm = messageObject.a || messageObject.algorithm || dAlgorithm;
+ 	var speaker = messageObject.s || messageObject.speaker || dSpeaker;
+ 	var language = messageObject.l || messageObject.language || dLanguage;
+ 	var volume = messageObject.v || messageObject.volume || dVolume;
+ 	var rate = messageObject.r || messageObject.rate || dRate;
+ 	var text = messageObject.t || messageObject.text || dText;
+	*/
+ 	var keys = messageConfig.keys;
+ 	for (var i = 0; i &lt; keys.length; i++) {
+ 		internalMessageObject[keys[i]] = messageObject[keys[i]] ||
+ 			messageObject[keys[i].charAt(0)] || 
+ 			messageConfig[keys[i]][&quot;defaultValue&quot;];
+ 		try {
+ 			internalMessageObject[keys[i]] = parseInt(internalMessageObject[keys[i]])
+ 			if (internalMessageObject[keys[i]] &lt; messageConfig[keys[i]][&quot;minimumValue&quot;]) {
+ 				internalMessageObject[keys[i]] = messageConfig[keys[i]][&quot;defaultValueOnMinimum&quot;];
+ 			} else if (internalMessageObject[keys[i]] &gt; messageConfig[keys[i]][&quot;maximumValue&quot;]) {
+ 				internalMessageObject[keys[i]] = messageConfig[keys[i]][&quot;defaultValueOnMaximum&quot;];
+ 			};
+ 		} catch (err) {
+ 			internalMessageObject[keys[i]] = messageConfig[keys[i]][&quot;defaultValueOnError&quot;];
+ 		} finally {
+ 			if (messageConfig[keys[i]][&quot;syntaxKeyForEMIC&quot;]) {
+ 				messageArray.push(messageConfig[keys[i]][&quot;syntaxKeyForEMIC&quot;] 
+ 					+ internalMessageObject[keys[i]] + &quot;\n&quot;);
+ 			};
+ 		};
+ 	};
+ 	
+ 	internalMessageObject.text = messageObject.text || messageObject.t || messageConfig.text.defaultValue;
+ 	try {
+ 		internalMessageObject.text = internalMessageObject.text.toString(&quot;ascii&quot;);
+ 		if (internalMessageObject.text.length &lt; messageConfig.text.minimumValue) {
+ 			internalMessageObject.text = messageConfig.text.defaultValueOnMinimum;
+ 		} else if (internalMessageObject.text.length &gt; messageConfig.text.maximumValue) {
+ 			internalMessageObject.text = messageConfig.text.defaultValueOnMaximum;
+ 		};
+ 	} catch (err) {
+ 		internalMessageObject.text = messageConfig.text.defaultValueOnError;
+ 	} finally {
+ 		if (messageConfig.text.syntaxKeyForEMIC) {
+ 			messageArray.push(messageConfig.text.syntaxKeyForEMIC + internalMessageObject.text + &quot;\n&quot;);
+ 		};
+ 	};
+ 	
+ 	/*
+ 	// Vett priority
+ 	try {
+ 		priority = parseInt(priority);
+ 		if (priority &lt; minPriority || priority &gt; maxPriority) {
+ 			priority = dPriority;
+ 		}
+ 	} catch(err) {
+ 		priority = dPriority;
+ 	};
+ 			//// the +1 shifts the priority from 0-3 to 1-4
+ 	
+ 	// Vet algorithm data
+ 	try {
+ 		algorithm = parseInt(algorithm);
+ 		if (algorithm &lt; minAlgorithm || algorithm &gt; maxAlgorithm) {
+ 			algorithm = dAlgorithm;
+ 		};
+ 	} catch(err) {
+ 		algorithm = dAlgorithm;
+ 	} finally {
+ 		messageArray.push(&#039;P&#039; + algorithm + &#039;\n&#039;);
+	};
+
+	// Vett speaker data
+	try {
+		speaker = parseInt(speaker);
+		if (speaker &lt; minSpeaker || speaker &gt; maxSpeaker) {
+			speaker = dSpeaker;
+		};
+	} catch(err) {
+		speaker = dSpeaker;
+	} finally {
+		messageArray.push(&#039;N&#039; + speaker + &#039;\n&#039;);
+	}
+
+	// Vett language data
+ 	try {
+ 		language = parseInt(language);
+ 		if (language &lt; maxLanguage || language &gt; maxLanguage) {
+ 			language = dLanguage
+ 		};
+ 	} catch(err) {
+ 		language = dLanguage;
+ 	} finally {
+ 		messageArray.push(&#039;L&#039; + language + &#039;\n&#039;);
+ 	};
+
+ 	// Vett volume data
+ 	try {
+ 		volume = parseInt(volume);
+ 		if (volume &lt; minVolume) {
+ 			volume = minVolume;
+ 		} else if (volume &gt; maxVolume) {
+ 			volume = maxVolume;
+ 		};
+ 	} catch(err) {
+ 		console.error(err);
+ 		volume = dVolume;
+ 	} finally {
+ 		messageArray.push(&#039;V&#039; + volume + &#039;\n&#039;);
+ 	};
+
+ 	// Vett rate data
+ 	try {
+ 		rate = parseInt(rate);
+ 		if (rate &lt; minRate) {
+ 			rate = minRate;
+ 		} else if (rate &gt; maxRate) {
+ 			rate = maxRate;
+ 		};
+ 	} catch(err) {
+ 		rate = dRate;
+ 	} finally {
+ 		messageArray.push(&#039;W&#039; + rate + &#039;\n&#039;);
+ 	};
+
+ 	// Vett text data
+ 	try {
+ 		text = text.toString(&#039;ascii&#039;);
+ 		if (text.length &lt; minTextLength) {
+ 			text = &#039;Message is too short.&#039;
+ 		} else if (text.length &gt; maxTextLength) {
+ 			text = &#039;Message is too long.&#039;
+ 		};
+ 	} catch(err) {
+ 		text = dText;
+ 	} finally {
+ 		messageArray.push(&#039;S&#039; + text + &#039;\n&#039;);
+ 	};
+	*/
+
+
+ 	console.log(messageArray);
+
+ 	masterQueue.push([messageArray], function (err) {
+ 		console.log(masterQueue.length());
+ 		if (err) {
+ 			emicReport(err);
+ 			console.error(err);
+ 		} else {
+ 			emicReport(&#039;EMIC read:\n    &#039; + internalMessageObject.text);
+ 		};
+ 		//masterQueue.pause();
+ 	});
+ 	internalMessageObject = {}
+ 	messageArray = [];
+});
+
+
+
+// JSON.stringify(object)
+// JSON.parse(jsonString)
+
+
+/*JSON communication API
+
+msg = {
+	&#039;p&#039;: priority,
+	&#039;a&#039;: algorithm,
+	&#039;v&#039;: volume,
+	&#039;r&#039;: rate,
+	&#039;l&#039;: language,
+	&#039;s&#039;: speaker,
+	&#039;t&#039;: text
+}
+or
+msg = {
+	&#039;volume&#039;: volume,			// a signed integer with -48 &lt;= v &lt;= 18
+	&#039;rate&#039;: rate,				// an unsigned integer with 75 &lt;= r &lt;= 600
+	&#039;speaker&#039;: speaker, 		// an unsigned integer with 0 &lt;= s &lt;= 8
+	&#039;language&#039;: language,		// an unsigned integer with 0 &lt;= l &lt;= 2
+	&#039;algorithm&#039;: algorithm,		// an unsigned integer with 0 &lt;= a &lt;= 1
+	&#039;text&#039;: text,				// a string of length &lt;= 1000
+	&#039;priority&#039;: priority		// an unsigned integer with 0 &lt;= p &lt;= 3
+}
+
+&#039;language&#039; = {
+	0: &#039;US English&#039;,
+	1: &#039;Castilian Spanish&#039;,
+	2: &#039;Latin Spanish&#039;
+}
+
+&#039;speaker&#039; = {
+	0: &#039;Perfect Paul&#039;,
+	1: &#039;Huge Harry&#039;,
+	2: &#039;Beautiful Betty&#039;,
+	3: &#039;Uppity Ursula&#039;,
+	4: &#039;Doctor Dennis&#039;,
+	5: &#039;Kit the Kid&#039;,
+	6: &#039;Frail Frank&#039;
+	7: &#039;Rough Rita&#039;,
+	8: &#039;Whispering Wendy&#039;
+}
+
+&#039;algorithm&#039; = {
+	0: &#039;DECtalk&#039;,
+	1: &#039;Epson&#039;
+}
+
+&#039;default&#039; = {
+	&#039;s&#039;: 0,
+	&#039;v&#039;: 0,
+	&#039;l&#039;: 0,
+	&#039;r&#039;: 200,
+	&#039;p&#039;: 3 
+}
+
+&#039;priority&#039; = {
+	0: &#039;Emergency Only (evacuation, etc.) (increase volume to max)&#039;,
+	1: &#039;High priority for immediate broadcast (weather warning)&#039;,
+	2: &#039;Normal (communications)&#039;,
+	3: &#039;Unimportant (reading a book, temperature report)&#039;
+}
+*/
+/* JSON Config.json
+
+{
+	&quot;priority&quot;: {
+		&quot;default&quot;: 4,
+		&quot;min&quot;: 1,
+		&quot;onMin&quot;: &quot;default&quot;,
+		&quot;max&quot;: 4,
+		&quot;onMax&quot;: &quot;default&quot;,
+		&quot;key&quot;: null,
+		&quot;ofWhat&quot;: null
+	},
+	&quot;algorithm&quot;: 
+
+}
+
+
+/*
+var EMIC = function(port, baudRate) {
+	var self = this;
+
+	EventEmitter.call(this);
+
+	this._serialPort = new SerialPort(port, {
+		baudRate: baudRate
+	});
+
+	// this._queue = async.queue(self._messageWorker.bind(self), 1);
+	// equivalent to above
+	this._queue = async.queue(function(msg, callback) {
+		self._messageWorker(msg, callback);
+	}, 1);
+
+	this._queue.pause();
+
+	this._serialPort.on(&#039;open&#039;, function() {
+		self._serialPort.write(&#039;:&#039;);
+		self.emit(&#039;open&#039;);
+		self._queue.resume();
+	});
+
+	this._serialPort.on(&#039;error&#039;, function(err) {
+		console.error(err);
+	});
+
+	this._serialPort.on(&#039;data&#039;, function(data) {
+		console.log(&#039;Got data from serial port: %s\n&#039;, JSON.stringify(data.toString()), data);
+	});
+};
+
+util.inherits(EMIC, EventEmitter);
+
+EMIC.prototype.addMessage = function(msg, priority, callback) {
+	this._queue.push(msg, priority, callback);
+};
+
+EMIC.prototype._messageWorker = function(msg, callback) {
+	var self = this;
+	// todo: make this work
+	//this.parse(msg);
+
+	// alt.
+	this.emicCom(msg, function(err) {
+		console.log(&#039;Finished with %s.&#039;, msg);
+
+		self._serialPort.drain(function() {
+			setTimeout(function() {
+				callback(null);
+			}, 2500)
+		});
+	});
+};
+
+EMIC.prototype.emicCom = function(rawMsg, callback) {
+	console.log(&#039;Sending to emic: %s&#039;, rawMsg);
+	this._serialPort.write(rawMsg, callback);
+};
+
+EMIC.prototype.parse = function (msg, callback) {
+	var self = this;
+	msgEdit = msg.toString(&#039;ascii&#039;).trim();
+	args = msgEdit.split(&#039; &#039;);
+	console.log(args);
+
+	function add2Q (string, callback) {
+		self.addMessage(string, callback)
+	}
+	while ((args.length != 0) &amp;&amp; (args[0].search(&#039;:&#039;) != -1)) {
+		switch(args[0].split(&#039;:&#039;)[0].toLowerCase()) {
+			case &#039;demo&#039;:
+				this.demo(args[1], function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,2);
+				break;
+			case &#039;stop&#039;:
+				this.stopNow( function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,1);
+				break;
+			case &#039;pause&#039;:
+				this.pause( function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,1);
+				break;
+			case &#039;voice&#039;:
+				this.voice(args[1], function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,2);
+				break;
+			case &#039;volume&#039;:
+				this.volume(args[1], function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,2);
+				break;
+			case &#039;rate&#039;:
+				this.rate(args[1], function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,2);
+				break;
+			case &#039;parser&#039;:
+				this.chooseParser(args[1], function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,2);
+				break;
+			case &#039;revert&#039;:
+				this.revert( function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,1);
+				break;
+			case &#039;settings&#039;:
+				this.callCurrentSettings( function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,1);
+				break;
+			case &#039;version&#039;:
+				this.callVersionInfo( function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,1);
+				break;
+			case &#039;commands&#039;:
+				this.callCommands( function (data) {
+					add2Q(data, callback);
+				});
+				args.splice(0,1);
+				break;
+			default:
+				this.report(&#039;Invalid Command&#039;);
+				this.speak(args.join(&#039; &#039;), function (data) {
+					add2Q(data, callback);
+				});
+				args = [];
+				break;
+		};
+	};
+	this.speak(args.join(&#039; &#039;), function (data) {
+		add2Q(data, callback);
+	});
+	args = [];
+	return this;
+};
+
+EMIC.prototype.speak = function (data, callback) {
+	data = data.toString(&#039;ascii&#039;);
+	if (data.length &gt; 1000) {
+		report(&#039;Warning: Message exceeds 1000 characters&#039;);
+	} else {
+		callback(&#039;S&#039; + data + &#039;\n&#039;);
+	};
+	return this;
+};
+
+
+
+EMIC.prototype.demo = function (id, callback) {
+	id = id.toString(&#039;ascii&#039;);
+	if (id == &#039;0&#039; || id == &#039;1&#039; || id == &#039;2&#039;) {
+		callback(&#039;D&#039; + id + &#039;\n&#039;);
+	} else {
+		report(&#039;Error: Invalid Command&#039;);
+	};
+	return this;
+};
+
+EMIC.prototype.stopNow = function (callback) {
+	callback(&#039;X\n&#039;);
+	return this;
+};
+
+EMIC.prototype.pause = function (callback) {
+	callback(&#039;Z\n&#039;);
+	return this;
+};
+
+EMIC.prototype.voice = function (id, callback) {
+	var idN = id.parseInt();
+	if (idN &gt;= 0 &amp;&amp; idN &lt;= 8) {
+		id.toString(&#039;ascii&#039;);
+		callback(&#039;N&#039; + id + &#039;\n&#039;);
+	} else {
+		report(&#039;Error: Invalid Command&#039;);
+	};
+	return this;
+};
+
+EMIC.prototype.volume = function (level, callback) {
+	var levelN = level.parseInt();
+	if (levelN &gt;= -48 &amp;&amp; levelN &lt;= 18) {
+		level = level.toString(&#039;ascii&#039;);
+		callback(&#039;V&#039; + level + &#039;\n&#039;);
+	} else {
+		report(&#039;Error: Invalid Command&#039;);
+	};
+	return this;
+};
+
+EMIC.prototype.rate = function (wpm, callback) {
+	var wpmN = wpm.toString(&#039;ascii&#039;).parseInt();
+	if (wpmN &gt;= 75 &amp;&amp; wpmN &lt;= 600) {
+		wpm = wpm.toString(&#039;ascii&#039;);
+		callback(&#039;W&#039; + wpm + &#039;\n&#039;);
+	} else {
+		report(&#039;Error: Invalid Command&#039;);
+	};
+	return this;
+};
+
+EMIC.prototype.chooseParser = function (id, callback) {
+	id = id.toString(&#039;ascii&#039;);
+	if (parser == &#039;0&#039; || parser == &#039;1&#039; || parser == &#039;2&#039;) {
+		callback(&#039;P&#039; + id + &#039;\n&#039;);
+	} else {
+		report(&#039;Error: Invalid Command&#039;);
+	};
+	return this;
+};
+
+EMIC.prototype.revert = function (callback) {
+	callback(&#039;R\n&#039;);
+	return this;
+};
+
+EMIC.prototype.callCurrentSettings = function (callback) {
+	callback(&#039;C\n&#039;);
+	return this;
+};
+
+EMIC.prototype.callVersionInfo = function (callback) {
+	callback(&#039;I\n&#039;);
+	return this;
+};
+
+EMIC.prototype.callCommands = function (callback) {
+	callback(&#039;H\n&#039;);
+	return this;
+};
+
+EMIC.prototype.report = function (msg) {
+
+};
+
+module.exports = {
+	create: function(port) {
+		return new EMIC(port);
+	}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //Power is connected to pin4 (5V), ground is pin6, tx (output) is pin 8,
+// // rx (input) is pin10
+// var mqtt = require(&#039;mqtt&#039;);
+// var client = mqtt.connect(&#039;server&#039;);
+// var async = require(&#039;async&#039;);
+
+// client.subscribe(&#039;topic&#039;);
+// client.publish(&#039;topic&#039;, &#039;msg&#039;);
+
+// client.on(&#039;msg&#039;, function (topic, msg) {
+// 	//message is given as buffer
+// 	msg = msg.toString(&#039;ascii&#039;);
+// })
+
+// /*
+
+// JSON.stringify(object)
+// JSON.parse(jsonString)
+
+
+// */
+
+
+
+
+// function report (msg) {
+// 	console.log(msg)
+// };
+
+// function emicRep (msg) {
+// 	//io.emit(&#039;emic message&#039;, msg);
+// };
+// //io.emit(&#039;emic message&#039;, &#039;hello to all from emic&#039;);
+
+// /*
+// var app = require(&#039;express&#039;)();
+// var http = require(&#039;http&#039;).Server(app);
+// var io = require(&#039;socket.io&#039;)(http);
+
+// var SerialPort = require(&#039;serialport&#039;).SerialPort;
+// var serialPort = new SerialPort(&#039;/dev/ttyAMA0&#039;, {
+// 	baudRate: 9600
+// });
+// */
+
+
+// module.exports = function (io) {
+// 	/*function executeFn (arr, callback) {
+// 		var num = arr.length
+// 		var execStr = &#039;EMIC.prototype.&#039;
+// 		var firstArg = arr[0].toString(&#039;ascii&#039;);
+// 		switch (arr.length) {
+// 			case 1:
+// 				execStr = execStr + firstArg + &#039;()&#039;;
+// 				eval(execStr);
+// 				break;
+// 			case 2:
+// 				execStr = execStr + firstArg + &#039;(&#039;
+// 					+ arr[1].toString(&#039;ascii&#039;) + &#039;)&#039;;
+// 				eval(execStr);
+// 				break;
+// 			default:
+// 				execStr = execStr + firstArg + &#039;([&#039;
+// 					+ arr.splice(0,1).join() + &#039;])&#039;;
+// 				eval(execStr);
+// 				break;
+// 		};
+// 		callback();
+// 	};*/
+
+// 	function report (msg) {
+// 		io.emit(&#039;emic message&#039;, msg);
+// 		console.log(&#039;EMIC: &#039; + msg);
+// 	};
+
+// 	var SerialPort = require(&#039;serialport&#039;).SerialPort;
+// 	var serialPort = new SerialPort(&#039;/dev/ttyAMA0&#039;, {
+// 		baudRate: 9600
+// 	});
+// 	report(&#039;Successfully loaded SerialPort module&#039;);
+// 	report(&#039;Successfully initialised /dev/ttyAMA0&#039;);
+// 	var masterqueue = async.queue(emicCom, 1);
+// 	masterqueue.drain = function () {
+// 		report(&#039;EMIC is standing by for a command&#039;);
+// 	};
+
+// 	var isReady = false;
+
+	
+// 	function emicCom (obj, callback) {
+// 		isReady = false;
+// 		console.log(isReady);
+// 		console.log(obj.data);
+// 		obj.port.write(obj.data);
+// 		while (isReady = false) {
+// 			setTimeout( function () {}, 50);
+// 		}
+// 		callback();
+// 	};
+
+// 	var EMIC = {};
+
+// 	EMIC.prototype.report = function (msg) {
+// 		io.emit(&#039;emic message&#039;, msg);
+// 	};
+
+
+
+// 	EMIC.prototype.parse = function (msg) {
+// 		msgEdit = msg.toString(&#039;ascii&#039;).trim();
+// 		args = msg.split(&#039; &#039;);
+// 		while ((args.length != 0) &amp;&amp; (args[0].search(&#039;:&#039;) != -1)) {
+// 			switch(args[0].split(&#039;:&#039;)[0].toLowerCase()) {
+// 				case &#039;demo&#039;:
+// 					this.demo(args[1]);
+// 					args.splice(0,2);
+// 					break;
+// 				case &#039;stop&#039;:
+// 					this.stopNow();
+// 					args.splice(0,1);
+// 					break;
+// 				case &#039;pause&#039;:
+// 					this.pause();
+// 					args.splice(0,1);
+// 					break;
+// 				case &#039;voice&#039;:
+// 					this.voice(args[1]);
+// 					args.splice(0,2);
+// 					break;
+// 				case &#039;volume&#039;:
+// 					this.volume(args[1]);
+// 					args.splice(0,2);
+// 					break;
+// 				case &#039;rate&#039;:
+// 					this.rate(args[1]);
+// 					args.splice(0,2);
+// 					break;
+// 				case &#039;parser&#039;:
+// 					this.chooseParser(args[1]);
+// 					args.splice(0,2);
+// 					break;
+// 				case &#039;revert&#039;:
+// 					this.revert();
+// 					args.splice(0,1);
+// 					break;
+// 				case &#039;settings&#039;:
+// 					this.callCurrentSettings();
+// 					args.splice(0,1);
+// 					break;
+// 				case &#039;version&#039;:
+// 					this.callVersionInfo();
+// 					args.splice(0,1);
+// 					break;
+// 				case &#039;commands&#039;:
+// 					this.callCommands();
+// 					args.splice(0,1);
+// 					break;
+// 				default:
+// 					this.report(&#039;Invalid Command&#039;);
+// 					this.speak(args.join(&#039; &#039;));
+// 					args = [];
+// 					break;
+// 			};
+// 		};
+// 		this.speak(args.join(&#039; &#039;));
+// 		args = [];
+// 	};
+// 	io.on(&#039;connection&#039;, function (socket) {
+// 		io.emit(&#039;emic message&#039;, &#039;hello world from emic&#039;);
+// 		socket.on(&#039;user message&#039;, function (msg) {
+// 			EMIC.prototype.parse(msg);
+// 			io.emit(&#039;emic message&#039;, &#039;ECHO: &#039; + msg);
+// 		});
+		
+// 	});
+// 	serialPort.on(&#039;open&#039;, function () {
+// 			isReady = true;
+// 			report(&#039;Port is open&#039;)
+// 			serialPort.on(&#039;data&#039;, function(msg) {
+// 				msg = msg.toString(&#039;ascii&#039;);
+// 				console.log(&#039;emicSerial: &#039; + msg);
+// 				if (msg == &#039;:&#039;) {
+// 					console.log(&#039;Emic is ready for an instruction&#039;)
+// 				} else if (msg == &#039;:?&#039;) {
+// 					report(&#039;Invalid instruction&#039;);
+// 				} else {
+// 					report(msg);
+// 				};
+// 				isReady = true
+// 				serialPort.flush();
+// 			});
+// 	});
+// 	return EMIC;
+// };
+
+// 	/*var EMIC = {
+// 		init: function () {
+// 			serialPort.on(&#039;open&#039;, function () {
+// 				//repEmic(&#039;Hello world&#039;)
+// 				report(&#039;Port is open&#039;)
+// 				isOpen = true;
+// 				serialPort.on(&#039;data&#039;, function(msg) {
+// 					msg = msg.toString(&#039;ascii&#039;);
+// 					//console.log(msg);
+// 					serialPort.flush();
+// 					if (msg == &#039;:&#039;) {
+// 						isReady = true
+// 						console.log(&#039;Emic is ready for an instruction&#039;)
+// 					} else { console.log(&#039;errorcheck &#039;+msg)}
+// 				});
+// 			});
+		
+// 		},*/
+// /*function writeLog(logFile, output){
+// 	var logf = new File(logFile);
+// 	logf.writeln(output);
+// 	logf.close()*/
+
+// //serialPort.write(&#039;:S[wiy&lt;400,20&gt;wih&lt;300,25&gt;sh&lt;100&gt;yu&lt;200&gt;ax&lt;200,27&gt;meh&lt;200,25&gt;riy&lt;200,24&gt;krih&lt;300,22&gt;s&lt;100&gt;mah&lt;300&gt;s&lt;100&gt;wih&lt;400&gt;wih&lt;300,27&gt;sh&lt;100&gt;yu&lt;200&gt;ax&lt;200,29&gt;meh&lt;200,27&gt;riy&lt;200,25&gt;krih&lt;300,24&gt;s&lt;100&gt;mah&lt;300,20&gt;s&lt;100&gt;wih&lt;400&gt;wih&lt;300,29&gt;sh&lt;100&gt;yu&lt;200&gt;ax&lt;200,30&gt;meh&lt;200,29&gt;riy&lt;200,27&gt;KRIH&lt;300,25&gt;S&lt;100&gt;MAH&lt;300,22&gt;S&lt;100&gt;AE&lt;100,20&gt;N&lt;50&gt;D&lt;50&gt;AX&lt;200&gt;HXAE&lt;400,22&gt;PIY&lt;400,27&gt;NUW&lt;400,24&gt;YXIR&lt;600,25&gt;_&lt;100&gt; GUH&lt;300,20&gt;D&lt;100&gt;TAY&lt;400,25&gt;DIH&lt;200&gt;NX&lt;100&gt;Z&lt;100&gt;TUW&lt;400&gt;YU&lt;800,24&gt;WER&lt;400&gt;EH&lt;400,25&gt;VRR&lt;400,24&gt;YU&lt;400,22&gt;AR&lt;800,20&gt;GUH&lt;300,27&gt;D&lt;100&gt;TAY&lt;400,29&gt;DIH&lt;200,27&gt;NX&lt;100&gt;Z&lt;100&gt;FOR&lt;400,25&gt;KRIH&lt;300,32&gt;S&lt;100&gt;MAH&lt;300,20&gt;S&lt;100&gt;AE&lt;100&gt;N&lt;50&gt;D&lt;50&gt;AX&lt;200&gt;HXAE&lt;400,22&gt;PIY&lt;400,27&gt;NUW&lt;400,24&gt;YXIR&lt;600,25&gt;_&lt;100&gt; WIY&lt;400,20&gt;WIH&lt;300,25&gt;SH&lt;100&gt;YU&lt;200&gt;AX&lt;200,27&gt;MER&lt;200,25&gt;RIY&lt;200,24&gt;KRIH&lt;300,22&gt;S&lt;100&gt;MAH&lt;300&gt;S&lt;100&gt;WIY&lt;400&gt;WIH&lt;300,27&gt;SH&lt;100&gt;YU&lt;200&gt;AX&lt;200,29&gt;MEH&lt;200,27&gt;RIY&lt;200,25&gt;KRIH&lt;300,24&gt;S&lt;100&gt;MAH&lt;300,20&gt;S&lt;100&gt;WIY&lt;400&gt;WIH&lt;300,29&gt;SH&lt;100&gt;YU&lt;200&gt;AX&lt;200,30&gt;MEH&lt;200,29&gt;RIY&lt;200,27&gt;KRIH&lt;300,25&gt;S&lt;100&gt;MAH&lt;300,22&gt;S&lt;100&gt;AE&lt;100,20&gt;N&lt;50&gt;D&lt;50&gt;AX&lt;200&gt;HXAE&lt;400,22&gt;PIY&lt;400,27&gt;NUW&lt;400,24&gt;YXIR&lt;800,25&gt;]\r&#039;);
+// //serialPort.write(&#039;:S[:PHONE ON] [:nv] [:dv gn 75] [wiy&lt;400,20&gt;wih&lt;300,25&gt;sh&lt;100&gt;yu&lt;200&gt;ax&lt;200,27&gt;meh&lt;200,25&gt;riy&lt;200,24&gt;krih&lt;300,22&gt;s&lt;100&gt;mah&lt;300&gt;s&lt;100&gt;wih&lt;400&gt;wih&lt;300,27&gt;sh&lt;100&gt;yu&lt;200&gt;ax&lt;200,29&gt;meh&lt;200,27&gt;riy&lt;200,25&gt;krih&lt;300,24&gt;s&lt;100&gt;mah&lt;300,20&gt;s&lt;100&gt;wih&lt;400&gt;wih&lt;300,29&gt;sh&lt;100&gt;yu&lt;200&gt;ax&lt;200,30&gt;meh&lt;200,29&gt;riy&lt;200,27&gt;KRIH&lt;300,25&gt;S&lt;100&gt;MAH&lt;300,22&gt;S&lt;100&gt;AE&lt;100,20&gt;N&lt;50&gt;D&lt;50&gt;AX&lt;200&gt;HXAE&lt;400,22&gt;PIY&lt;400,27&gt;NUW&lt;400,24&gt;YXIR&lt;600,25&gt;_&lt;100&gt;]. [GUH&lt;300,20&gt;D&lt;100&gt;TAY&lt;400,25&gt;DIH&lt;200&gt;NX&lt;100&gt;Z&lt;100&gt;TUW&lt;400&gt;YU&lt;800,24&gt;WER&lt;400&gt;EH&lt;400,25&gt;VRR&lt;400,24&gt;YU&lt;400,22&gt;AR&lt;800,20&gt;GUH&lt;300,27&gt;D&lt;100&gt;TAY&lt;400,29&gt;DIH&lt;200,27&gt;NX&lt;100&gt;Z&lt;100&gt;FOR&lt;400,25&gt;KRIH&lt;300,32&gt;S&lt;100&gt;MAH&lt;300,20&gt;S&lt;100&gt;AE&lt;100&gt;N&lt;50&gt;D&lt;50&gt;AX&lt;200&gt;HXAE&lt;400,22&gt;PIY&lt;400,27&gt;NUW&lt;400,24&gt;YXIR&lt;600,25&gt;_&lt;100&gt;]. [WIY&lt;400,20&gt;WIH&lt;300,25&gt;SH&lt;100&gt;YU&lt;200&gt;AX&lt;200,27&gt;MER&lt;200,25&gt;RIY&lt;200,24&gt;KRIH&lt;300,22&gt;S&lt;100&gt;MAH&lt;300&gt;S&lt;100&gt;WIY&lt;400&gt;WIH&lt;300,27&gt;SH&lt;100&gt;YU&lt;200&gt;AX&lt;200,29&gt;MEH&lt;200,27&gt;RIY&lt;200,25&gt;KRIH&lt;300,24&gt;S&lt;100&gt;MAH&lt;300,20&gt;S&lt;100&gt;WIY&lt;400&gt;WIH&lt;300,29&gt;SH&lt;100&gt;YU&lt;200&gt;AX&lt;200,30&gt;MEH&lt;200,29&gt;RIY&lt;200,27&gt;KRIH&lt;300,25&gt;S&lt;100&gt;MAH&lt;300,22&gt;S&lt;100&gt;AE&lt;100,20&gt;N&lt;50&gt;D&lt;50&gt;AX&lt;200&gt;HXAE&lt;400,22&gt;PIY&lt;400,27&gt;NUW&lt;400,24&gt;YXIR&lt;800,25&gt;].\r&#039;);</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

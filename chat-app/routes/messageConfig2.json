@@ -1,0 +1,72 @@
+{
+    "priority": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    },
+    "algorithm": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    },
+    "speaker": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    },
+    "language": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    },
+    "volume": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    },
+    "rate": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    },
+    "text": {
+        "defaultValue": "default",
+        "minimumValue": "default",
+        "maximumValue": "default",
+        "defaultValueOnMinimum": "default",
+        "defaultValueOnMaximum": "default",
+        "defaultValueOnError": "default",
+        "minMaxOfWhatProperty": "default",
+        "syntaxKeyForEMIC": "default"
+    }
+}

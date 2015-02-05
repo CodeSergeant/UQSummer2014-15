@@ -1,0 +1,76 @@
+{
+    "keys": [
+        "priority", "algorithm", "speaker", "language",
+        "volume", "rate", "text"
+    ],
+    "priority": {
+        "defaultValue": 4,
+        "minimumValue": 1,
+        "maximumValue": 4,
+        "defaultValueOnMinimum": 4,
+        "defaultValueOnMaximum": 4,
+        "defaultValueOnError": 4,
+        "minMaxOfWhatProperty": null,
+        "syntaxKeyForEMIC": null
+    },
+    "algorithm": {
+        "defaultValue": 1,
+        "minimumValue": 0,
+        "maximumValue": 1,
+        "defaultValueOnMinimum": 1,
+        "defaultValueOnMaximum": 1,
+        "defaultValueOnError": 1,
+        "minMaxOfWhatProperty": null,
+        "syntaxKeyForEMIC": "P"
+    },
+    "speaker": {
+        "defaultValue": 0,
+        "minimumValue": 0,
+        "maximumValue": 8,
+        "defaultValueOnMinimum": 0,
+        "defaultValueOnMaximum": 0,
+        "defaultValueOnError": 0,
+        "minMaxOfWhatProperty": null,
+        "syntaxKeyForEMIC": "N"
+    },
+    "language": {
+        "defaultValue": 0,
+        "minimumValue": 0,
+        "maximumValue": 2,
+        "defaultValueOnMinimum": 0,
+        "defaultValueOnMaximum": 0,
+        "defaultValueOnError": 0,
+        "minMaxOfWhatProperty": null,
+        "syntaxKeyForEMIC": "L"
+    },
+    "volume": {
+        "defaultValue": 0,
+        "minimumValue": -48,
+        "maximumValue": 10,
+        "defaultValueOnMinimum": -48,
+        "defaultValueOnMaximum": 10,
+        "defaultValueOnError": 0,
+        "minMaxOfWhatProperty": null,
+        "syntaxKeyForEMIC": "V"
+    },
+    "rate": {
+        "defaultValue": 200,
+        "minimumValue": 75,
+        "maximumValue": 600,
+        "defaultValueOnMinimum": 75,
+        "defaultValueOnMaximum": 600,
+        "defaultValueOnError": 200,
+        "minMaxOfWhatProperty": null,
+        "syntaxKeyForEMIC": "W"
+    },
+    "text": {
+        "defaultValue": "Hello World.",
+        "minimumValue": 0,
+        "maximumValue": 1000,
+        "defaultValueOnMinimum": "Hello World.",
+        "defaultValueOnMaximum": "Sorry, but that message is too long.",
+        "defaultValueOnError": "Sorry, but there was an error with that message.",
+        "minMaxOfWhatProperty": "length",
+        "syntaxKeyForEMIC": "S"
+    }
+}
