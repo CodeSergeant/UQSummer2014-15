@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/CodeSergeant/UQSummer2014-15"
+    "url": "git://github.com/CodeSergeant/UQSummer2014-15.git"
   },
   "keywords": [
     "mqtt",
