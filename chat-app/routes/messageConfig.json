@@ -44,7 +44,7 @@
         "syntaxKeyForEMIC": "L"
     },
     "volume": {
-        "defaultValue": 0,
+        "defaultValue": -3,
         "minimumValue": -48,
         "maximumValue": 10,
         "defaultValueOnMinimum": -48,

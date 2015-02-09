@@ -1,8 +1,8 @@
 {
     "mqtt": {
         "server": "mqtt://winter.ceit.uq.edu.au",
-        "inputSubscription": "emic-in",
-        "outputSubscription": "emic-out"
+        "inputSubscription": "SpeakThis",
+        "outputSubscription": "SpeakThis/report"
     },
     "serialPort": {
         "port": "/dev/ttyAMA0",

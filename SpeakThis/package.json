@@ -1,0 +1,29 @@
+{
+  "name": "SpeakThis",
+  "version": "1.0.0",
+  "description": "A MQTT module for interfacing with the EMIC2 TTS Converter.",
+  "main": "SpeakThis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CodeSergeant/UQSummer2014-15"
+  },
+  "keywords": [
+    "mqtt",
+    "emic2",
+    "text-to-speech converter"
+  ],
+  "author": "Lucas M. Rabenhorst",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CodeSergeant/UQSummer2014-15/issues"
+  },
+  "homepage": "https://github.com/CodeSergeant/UQSummer2014-15",
+  "dependencies": {
+    "async": "^0.9.0",
+    "mqtt": "^1.0.8",
+    "serialport": "^1.4.10"
+  }
+}
