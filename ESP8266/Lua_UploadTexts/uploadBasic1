@@ -1,0 +1,5 @@
+file.open("init.lua","w")
+file.writeline([[print("Some simple message")]])
+file.writeline([[wifi.setmode(wifi.SOFTAP)]])
+file.writeline([[print("ESP8266 mode is: " .. wifi.getmode())]])
+file.close()
