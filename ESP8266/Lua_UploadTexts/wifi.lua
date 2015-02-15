@@ -3,7 +3,7 @@ wifi.setmode(wifi.SOFTAP)
 print("ESP8266 mode is: " .. wifi.getmode())
 cfg={}
 cfg.ssid="eduroam"
-cfg.pwd="100%4Hisglory"
+cfg.pwd="password"
 if ssid and password then
 	print("ESP8266 SSID is: " .. cfg.ssid .. " and PASSWORD is: " .. cfg.password)
 end
