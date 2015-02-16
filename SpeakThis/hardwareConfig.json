@@ -1,0 +1,11 @@
+{
+    "mqtt": {
+        "server": "mqtt://winter.ceit.uq.edu.au",
+        "inputSubscription": "SpeakThis",
+        "outputSubscription": "SpeakThis/report"
+    },
+    "serialPort": {
+        "port": "/dev/ttyAMA0",
+        "baudRate": 9600
+    }
+}
