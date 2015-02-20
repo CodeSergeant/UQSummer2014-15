@@ -1,0 +1,22 @@
+{
+  "name": "SpeakThis_GUI",
+  "version": "1.0.0",
+  "description": "A Graphical User Interface for publishing MQTT messages for use with the SpeakThis module.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MQTT",
+    "EMIC",
+    "GUI",
+    "Text-to-speech",
+    "converter"
+  ],
+  "author": "Lucas M. Rabenhorst",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.11.2",
+    "mqtt": "^1.0.10"
+  }
+}
